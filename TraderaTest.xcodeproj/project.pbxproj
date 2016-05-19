@@ -12,6 +12,8 @@
 		DCE7B80B1CE9F8590096D5C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B8091CE9F8590096D5C9 /* Main.storyboard */; };
 		DCE7B80D1CE9F8590096D5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B80C1CE9F8590096D5C9 /* Assets.xcassets */; };
 		DCE7B8101CE9F8590096D5C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B80E1CE9F8590096D5C9 /* LaunchScreen.storyboard */; };
+		DCE7B8181CEC7C190096D5C9 /* TraderaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8171CEC7C190096D5C9 /* TraderaService.swift */; };
+		DCE7B81C1CECC6C90096D5C9 /* TraderaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B81B1CECC6C90096D5C9 /* TraderaItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		DCE7B80C1CE9F8590096D5C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCE7B80F1CE9F8590096D5C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DCE7B8111CE9F8590096D5C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCE7B8171CEC7C190096D5C9 /* TraderaService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaService.swift; sourceTree = "<group>"; };
+		DCE7B81B1CECC6C90096D5C9 /* TraderaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 			children = (
 				DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */,
 				DCE7B8071CE9F8590096D5C9 /* ViewController.swift */,
+				DCE7B81B1CECC6C90096D5C9 /* TraderaItem.swift */,
+				DCE7B8171CEC7C190096D5C9 /* TraderaService.swift */,
 				DCE7B8091CE9F8590096D5C9 /* Main.storyboard */,
 				DCE7B80C1CE9F8590096D5C9 /* Assets.xcassets */,
 				DCE7B80E1CE9F8590096D5C9 /* LaunchScreen.storyboard */,
@@ -138,6 +144,8 @@
 			files = (
 				DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */,
 				DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */,
+				DCE7B81C1CECC6C90096D5C9 /* TraderaItem.swift in Sources */,
+				DCE7B8181CEC7C190096D5C9 /* TraderaService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,8 +258,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = TraderaTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kristallpojken.TraderaTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -261,8 +271,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/include/libxml2;
 				INFOPLIST_FILE = TraderaTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
 				PRODUCT_BUNDLE_IDENTIFIER = org.kristallpojken.TraderaTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -287,6 +299,7 @@
 				DCE7B8161CE9F8590096D5C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
