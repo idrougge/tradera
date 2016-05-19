@@ -6,7 +6,7 @@
 //  Copyright © 2016 Iggy Drougge. All rights reserved.
 //
 
-import Foundation
+import Foundation
 
 class TraderaService {
     static let appid=1589
