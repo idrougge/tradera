@@ -6,10 +6,7 @@
 //  Copyright © 2016 Iggy Drougge. All rights reserved.
 //
 
-import Foundation
-//import "KissXML/DDXML"
-//import NSXMLNode
-
+import Foundation
 
 class TraderaService {
     static let appid=1589

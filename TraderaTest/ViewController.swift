@@ -15,7 +15,9 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     var mutableData:NSMutableData=NSMutableData()
     var currentElementName:NSString=""
     let tra=TraderaService()
+    var items:[TraderaItem]?
     var errors=0
+    var incomplete=0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +56,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
         let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
         connection!.start()
         if(connection==true) {
-            var mutableData:Void=NSMutableData.initialize()
+            //var mutableData:Void=NSMutableData.initialize()
         }
     }
     // Används av NSURLConnectionDataDelegate
@@ -67,7 +69,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     }
     // Används av NSURLConnectionDataDelegate
     func connectionDidFinishLoading(connection:NSURLConnection) {
-        let response=NSString(data: mutableData, encoding: NSUTF8StringEncoding)
+        //let response=NSString(data: mutableData, encoding: NSUTF8StringEncoding)
         //print("response: \(response)")
         let xmlParser=NSXMLParser(data: mutableData)
         xmlParser.delegate=self
@@ -101,6 +103,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
             var data=""
             if let oldData=currentItem[currentElementName as String] {
                 data=oldData+string
+                incomplete+=1
             }
             else {
                 data=string
@@ -116,17 +119,19 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
             //if let hasBids=currentItem["HasBids"] {} // funkar
             //guard let hasBids=currentItem["HasBids"] // funkar
             //    else {print("Kunde inte konvertera HasBids");return}
-            guard let hasBids=currentItem["HasBids"],
-                let isEnded=currentItem["IsEnded"] // funkar
+            guard let _=currentItem["HasBids"],
+                let _=currentItem["IsEnded"] // funkar
                 else {print("___Kunde inte konvertera Items-XML: hasBids=\(currentItem["HasBids"]) ; isEnded=\(currentItem["IsEnded"])");return}
             if let traderaItem=TraderaItem(fromDict: currentItem) {
                 print("Lyckades skapa auktionsobjekt:")
                 print("ID \(traderaItem.id): \(traderaItem.shortDescription)")
+                items?.append(traderaItem)
             }
             else {
                 print("Misslyckades att skapa auktionsobjekt!")
                 errors+=1
             }
+            print("Antal ofullständiga data: \(incomplete)")
             print("Antal felaktiga objekt: \(errors)")
             foundItem=false
         }
