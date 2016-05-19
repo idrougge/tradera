@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate, NSXMLParserDelegate {
 // obs alla protokollen ovan
     @IBOutlet weak var celsiusField: UITextField!
-    @IBOutlet weak var fahrenheitField: UITextField!
     var mutableData:NSMutableData=NSMutableData()
     var currentElementName:NSString=""
     let tra=TraderaService()
@@ -90,11 +89,8 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     }
     // Används av NSXMLParserDelegate
     func parser(parser:NSXMLParser, foundCharacters string:String) {
-        if currentElementName=="CelsiusToFahrenheitResult" {
-            fahrenheitField.text=string
-        }
         if currentElementName=="GetOfficalTimeResult" {
-            fahrenheitField.text=string
+            celsiusField.text=string
         }
         if currentElementName=="TotalNumberOfItems" {
             print("Hittade \(string) sökträffar")
@@ -135,6 +131,9 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
             print("Antal felaktiga objekt: \(errors)")
             foundItem=false
         }
+    }
+    @IBAction func showList(sender: AnyObject) {
+        performSegueWithIdentifier("ShowSearchResultsSegue", sender: view)
     }
 }
 
