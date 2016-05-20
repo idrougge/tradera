@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DC22FECE1CEE18E600921E68 /* TraderaSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */; };
+		DC22FED01CEE205600921E68 /* TraderaSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22FECF1CEE205600921E68 /* TraderaSearchTableViewController.swift */; };
+		DC22FED41CEF68ED00921E68 /* TraderaSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22FED31CEF68ED00921E68 /* TraderaSession.swift */; };
 		DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */; };
 		DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8071CE9F8590096D5C9 /* ViewController.swift */; };
 		DCE7B80B1CE9F8590096D5C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B8091CE9F8590096D5C9 /* Main.storyboard */; };
@@ -19,6 +21,8 @@
 
 /* Begin PBXFileReference section */
 		DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaSearchTableViewCell.swift; sourceTree = "<group>"; };
+		DC22FECF1CEE205600921E68 /* TraderaSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaSearchTableViewController.swift; sourceTree = "<group>"; };
+		DC22FED31CEF68ED00921E68 /* TraderaSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaSession.swift; sourceTree = "<group>"; };
 		DCE7B8021CE9F8590096D5C9 /* TraderaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraderaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCE7B8071CE9F8590096D5C9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,8 +68,10 @@
 				DCE7B8071CE9F8590096D5C9 /* ViewController.swift */,
 				DCE7B81B1CECC6C90096D5C9 /* TraderaItem.swift */,
 				DCE7B8171CEC7C190096D5C9 /* TraderaService.swift */,
+				DC22FED31CEF68ED00921E68 /* TraderaSession.swift */,
 				DCE7B8091CE9F8590096D5C9 /* Main.storyboard */,
 				DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */,
+				DC22FECF1CEE205600921E68 /* TraderaSearchTableViewController.swift */,
 				DCE7B80C1CE9F8590096D5C9 /* Assets.xcassets */,
 				DCE7B80E1CE9F8590096D5C9 /* LaunchScreen.storyboard */,
 				DCE7B8111CE9F8590096D5C9 /* Info.plist */,
@@ -148,6 +154,8 @@
 				DC22FECE1CEE18E600921E68 /* TraderaSearchTableViewCell.swift in Sources */,
 				DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */,
 				DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */,
+				DC22FED41CEF68ED00921E68 /* TraderaSession.swift in Sources */,
+				DC22FED01CEE205600921E68 /* TraderaSearchTableViewController.swift in Sources */,
 				DCE7B81C1CECC6C90096D5C9 /* TraderaItem.swift in Sources */,
 				DCE7B8181CEC7C190096D5C9 /* TraderaService.swift in Sources */,
 			);

@@ -80,3 +80,17 @@ class TraderaItem {
         self.init(id: Int(id)!, shortDescription: shortDescription, buyItNowPrice: Float(buyItNowPrice), sellerId: Int(sellerId)!, sellerAlias: sellerAlias, maxBid: Float(maxBid)!, thumbnailLink: thumbnailLink, sellerDsrAverage: Float(sellerDsrAverage)!, endDate: endDate, nextBid: Float(nextBid)!, hasBids: NSString(string:hasBids).boolValue, isEnded: NSString(string:isEnded).boolValue, itemType: itemType)
     }
 }
+import UIKit
+extension UIImageView {
+    public func imageFromURL(urlstring:String) {
+        if let url=NSURL(string: urlstring) {
+            let request=NSURLRequest(URL: url)
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()){
+                (response:NSURLResponse?, data:NSData?, error:NSError?) -> Void in
+                if let data=data {
+                    self.image=UIImage(data: data)
+                }
+            }
+        }
+    }
+}

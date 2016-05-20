@@ -10,11 +10,12 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate, NSXMLParserDelegate {
 // obs alla protokollen ovan
-    @IBOutlet weak var celsiusField: UITextField!
+    @IBOutlet weak var resultField: UITextField!
     var mutableData:NSMutableData=NSMutableData()
     var currentElementName:NSString=""
-    let tra=TraderaService()
-    var items:[TraderaItem]?
+    let service=TraderaService()
+    //var items:[TraderaItem]?
+    var items=[TraderaItem]()
     var errors=0
     var incomplete=0
     
@@ -23,8 +24,6 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
         // Do any additional setup after loading the view, typically from a nib.
         //print(TraderaService.publickey)
         //print(TraderaService.header)
-        //print(tra.getOfficialTime())
-        tra.getOfficialTime()
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,15 +32,8 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     }
 
     @IBAction func sendButton(sender: AnyObject) {
-        //let celsius=celsiusField.text
-        //let soapMessage="<?xml version='1.0' encoding='utf-8'?><soap12:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap12='http://www.w3.org/2003/05/soap-envelope'><soap12:Body><CelsiusToFahrenheit xmlns='http://www.w3schools.com/xml/'><Celsius>\(celsius!)</Celsius></CelsiusToFahrenheit></soap12:Body></soap12:Envelope>"
-        //let traderaTimeMessage="<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://api.tradera.com\"> <SOAP-ENV:Header>   <AuthenticationHeader xmlns=\"http://api.tradera.com\">        <AppId>1589</AppId>        <AppKey>52227af6-11f2-4b9a-b321-0c6b97d24d76</AppKey>        </AuthenticationHeader> </SOAP-ENV:Header> <SOAP-ENV:Body><ns1:GetOfficalTime/></SOAP-ENV:Body></SOAP-ENV:Envelope>"
-        let traderaTimeMessage=tra.getOfficialTime()
-        //print("traderaTimeMessage=\(traderaTimeMessage)")
-        //print("soapMessage: \(soapMessage)")
-        //let urlString="http://www.w3schools.com/xml/tempconvert.asmx"
-        //let urlString="http://api.tradera.com/v3/PublicService.asmx"
-        let urlString="http://api.tradera.com/v3/searchservice.asmx"
+        let traderaTimeMessage=service.search()
+        let urlString=TraderaService.searchServiceURL
         let url=NSURL(string:urlString)
         let request=NSMutableURLRequest(URL: url!)
         let msgLength=traderaTimeMessage.characters.count
@@ -68,16 +60,18 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     }
     // Används av NSURLConnectionDataDelegate
     func connectionDidFinishLoading(connection:NSURLConnection) {
-        //let response=NSString(data: mutableData, encoding: NSUTF8StringEncoding)
-        //print("response: \(response)")
+        let response=NSString(data: mutableData, encoding: NSUTF8StringEncoding)
+        print("response: \(response)")
         let xmlParser=NSXMLParser(data: mutableData)
-        xmlParser.delegate=self
+        //xmlParser.delegate=self
+        xmlParser.delegate=TraderaService.XMLParser()
         xmlParser.parse()
         xmlParser.shouldResolveExternalEntities=true
     }
-    //var currentItem:TraderaItem?
+
     var currentItem=[String:String]()
     var foundItem=false
+    
     // Används av NSXMLParserDelegate
     func parser(parser:NSXMLParser, didStartElement elementName:String, namespaceURI:String?, qualifiedName qName:String?, attributes attributeDict:[String:String]) {
         currentElementName=elementName
@@ -90,7 +84,17 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     // Används av NSXMLParserDelegate
     func parser(parser:NSXMLParser, foundCharacters string:String) {
         if currentElementName=="GetOfficalTimeResult" {
-            celsiusField.text=string
+            resultField.text=string
+            let currentTime=NSDate()
+            print("currentTime=\(currentTime)")
+            let dateformatter=NSDateFormatter()
+            dateformatter.dateFormat="yyyy-MM-dd'T'HH:mm:ss.SSS"
+            guard let timedate=dateformatter.dateFromString(string)
+                else {print("Fel: Kunde inte konvertera datumstämpel!");return}
+            print("timedate=\(timedate)")
+            print("väntetid: \(5*NSEC_PER_SEC)")
+            dispatch_after(5*NSEC_PER_SEC, dispatch_get_main_queue()){
+                print("currentTime=\(currentTime)")}
         }
         if currentElementName=="TotalNumberOfItems" {
             print("Hittade \(string) sökträffar")
@@ -107,6 +111,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
             currentItem[currentElementName as String]=data
         }
     }
+    
     // Används av NSXMLParserDelegate
     func parser(parser:NSXMLParser, didEndElement elementName:String, namespaceURI:String?, qualifiedName qName:String?) {
         if elementName=="Items" {
@@ -121,7 +126,8 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
             if let traderaItem=TraderaItem(fromDict: currentItem) {
                 print("Lyckades skapa auktionsobjekt:")
                 print("ID \(traderaItem.id): \(traderaItem.shortDescription)")
-                items?.append(traderaItem)
+                items.append(traderaItem)
+                print("Inlagda objekt: \(items.count)")
             }
             else {
                 print("Misslyckades att skapa auktionsobjekt!")
@@ -132,8 +138,55 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
             foundItem=false
         }
     }
+    
     @IBAction func showList(sender: AnyObject) {
         performSegueWithIdentifier("ShowSearchResultsSegue", sender: view)
+    }
+    
+    @IBAction func showTime(sender: AnyObject) {
+        let traderaTimeMessage=service.getOfficialTime()
+        let urlString=TraderaService.publicServiceURL
+        let url=NSURL(string:urlString)
+        let request=NSMutableURLRequest(URL: url!)
+        let msgLength=traderaTimeMessage.characters.count
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
+        request.addValue("\"http://api.tradera.com/GetOfficalTime\"", forHTTPHeaderField: "SOAPAction")
+        request.HTTPMethod="POST"
+        request.HTTPBody=traderaTimeMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
+        connection!.start()
+        if(connection==true) {
+            print("Kopplade upp")
+        }
+    }
+    
+    @IBAction func showItem(sender: AnyObject) {
+        guard let id=items.last?.id
+            else {print("Hittade inget id!");return}
+        let traderaMessage=service.getItem(id)
+        let urlString=TraderaService.publicServiceURL
+        let url=NSURL(string: urlString)
+        let request=NSMutableURLRequest(URL: url!)
+        let msgLength=traderaMessage.characters.count
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
+        request.addValue("\"http://api.tradera.com/GetItem\"", forHTTPHeaderField: "SOAPAction")
+        request.HTTPMethod="POST"
+        request.HTTPBody=traderaMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
+        connection!.start()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("prepareForSegue(\(segue.identifier))")
+        switch segue.identifier! {
+        case "ShowSearchResultsSegue":
+            print("Växlar till visning av sökresultat")
+            let vc=segue.destinationViewController as! TraderaSearchTableViewController
+            vc.items=items
+        default: print("Okänd segue: \(segue.identifier)")
+        }
     }
 }
 

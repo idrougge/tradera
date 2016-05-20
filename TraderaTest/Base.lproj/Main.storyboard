@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,6 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Svar:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPb-Yg-Odi">
+                                <rect key="frame" x="74" y="117" width="39" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMN-pU-MWk">
                                 <rect key="frame" x="137" y="70" width="45" height="30"/>
                                 <state key="normal" title="Skicka"/>
@@ -24,22 +31,30 @@
                                     <action selector="sendButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T4o-gt-IwN"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Celsius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPb-Yg-Odi">
-                                <rect key="frame" x="57" y="117" width="56" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3br-Tf-rMO">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3br-Tf-rMO" userLabel="ResultField">
                                 <rect key="frame" x="136" y="108" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bn-jE-ZnR">
-                                <rect key="frame" x="144" y="209" width="30" height="30"/>
-                                <state key="normal" title="Visa"/>
+                                <rect key="frame" x="137" y="209" width="109" height="30"/>
+                                <state key="normal" title="Visa sökresultat"/>
                                 <connections>
                                     <action selector="showList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8mS-nH-Mgc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DGg-ff-B30">
+                                <rect key="frame" x="137" y="263" width="67" height="30"/>
+                                <state key="normal" title="Hämta tid"/>
+                                <connections>
+                                    <action selector="showTime:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PDE-D3-jlO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WHf-PJ-Znm">
+                                <rect key="frame" x="137" y="311" width="84" height="30"/>
+                                <state key="normal" title="Visa auktion"/>
+                                <connections>
+                                    <action selector="showItem:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UzU-w9-Q22"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -47,7 +62,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="FhP-Xt-T22"/>
                     <connections>
-                        <outlet property="celsiusField" destination="3br-Tf-rMO" id="R5T-eW-hYU"/>
+                        <outlet property="resultField" destination="3br-Tf-rMO" id="Ja0-ol-SNS"/>
                         <segue destination="TB7-am-ceX" kind="show" identifier="ShowSearchResultsSegue" id="VwF-s7-RAv"/>
                     </connections>
                 </viewController>
@@ -55,48 +70,60 @@
             </objects>
             <point key="canvasLocation" x="1089" y="251"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Tradera Search Table View Controller-->
         <scene sceneID="bY0-yi-IHZ">
             <objects>
-                <tableViewController id="TB7-am-ceX" sceneMemberID="viewController">
+                <tableViewController id="TB7-am-ceX" customClass="TraderaSearchTableViewController" customModule="TraderaTest" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="MXt-lG-FCG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TraderaSearchTableViewCell" rowHeight="90" id="0y3-Dh-qLE" customClass="TraderaSearchTableViewCell" customModule="TraderaTest" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="90"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TraderaSearchTableViewCell" rowHeight="110" id="0y3-Dh-qLE" customClass="TraderaSearchTableViewCell" customModule="TraderaTest" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="110"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0y3-Dh-qLE" id="bMR-K4-KM8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="109"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="beskrivning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="213-pF-TIq">
-                                            <rect key="frame" x="72" y="0.0" width="455" height="21"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yYA-uF-IXi">
+                                            <rect key="frame" x="8" y="0.0" width="96" height="96"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="96" id="pUe-V7-cEh"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="beskrivning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="213-pF-TIq">
+                                            <rect key="frame" x="112" y="0.0" width="480" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="kr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xz-c9-enn">
-                                            <rect key="frame" x="72" y="22" width="156" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Objekt:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ncf-2s-EXW">
-                                            <rect key="frame" x="8" y="0.0" width="56" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pris:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJV-ea-HjT">
-                                            <rect key="frame" x="30" y="22" width="34" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="kr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xz-c9-enn">
+                                            <rect key="frame" x="112" y="22" width="156" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="156" id="OaV-ea-fGa"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="213-pF-TIq" firstAttribute="trailing" secondItem="bMR-K4-KM8" secondAttribute="trailingMargin" id="6XT-kK-q1y"/>
+                                        <constraint firstItem="yYA-uF-IXi" firstAttribute="top" secondItem="213-pF-TIq" secondAttribute="top" id="Dea-7z-YMD"/>
+                                        <constraint firstItem="6xz-c9-enn" firstAttribute="top" secondItem="213-pF-TIq" secondAttribute="bottom" constant="1" id="ab2-1q-jyU"/>
+                                        <constraint firstItem="yYA-uF-IXi" firstAttribute="leading" secondItem="bMR-K4-KM8" secondAttribute="leadingMargin" id="bew-Uk-Xb9"/>
+                                        <constraint firstItem="yYA-uF-IXi" firstAttribute="top" secondItem="bMR-K4-KM8" secondAttribute="top" id="cqd-QS-ryU"/>
+                                        <constraint firstItem="213-pF-TIq" firstAttribute="leading" secondItem="yYA-uF-IXi" secondAttribute="trailing" constant="8" symbolic="YES" id="jCc-jR-6bI"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="yYA-uF-IXi" secondAttribute="bottom" constant="5" id="t3z-eZ-I59"/>
+                                        <constraint firstItem="213-pF-TIq" firstAttribute="leading" secondItem="6xz-c9-enn" secondAttribute="leading" id="zdt-mJ-81I"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="213-pF-TIq" id="ELb-DA-AQV"/>
+                                    <outlet property="itemImage" destination="yYA-uF-IXi" id="1BR-R0-qQH"/>
+                                    <outlet property="priceLabel" destination="6xz-c9-enn" id="jxW-sx-qBG"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
