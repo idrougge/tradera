@@ -11,6 +11,6 @@ import Foundation
 class TraderaSession {
     let service=TraderaService()
     var token:String?
-    var items:[TraderaItem]?
-    
+    //var items:[TraderaItem]?
+    var items=[TraderaItem]()
 }

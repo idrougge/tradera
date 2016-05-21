@@ -10,11 +10,13 @@ import Foundation
 class TraderaItem {
     let id:Int
     let shortDescription:String
+    let description:String?
     let buyItNowPrice:Float?
     let sellerId:Int
     let sellerAlias:String
     let maxBid:Float
     let thumbnailLink:String
+    let imageLink:String?
     let sellerDsrAverage:Float
     let endDate:String
     let nextBid:Float

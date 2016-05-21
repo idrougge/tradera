@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     var items=[TraderaItem]()
     var errors=0
     var incomplete=0
+    let session=TraderaSession()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +65,10 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
         print("response: \(response)")
         let xmlParser=NSXMLParser(data: mutableData)
         //xmlParser.delegate=self
-        xmlParser.delegate=TraderaService.XMLParser()
+        let parserDelegate=TraderaService.XMLParser(session: session)
+        //xmlParser.delegate=TraderaService.XMLParser(session: session)
+        xmlParser.delegate=parserDelegate
+        //xmlParser.delegate=service.XMLParser(session: session)
         xmlParser.parse()
         xmlParser.shouldResolveExternalEntities=true
     }
@@ -162,7 +166,8 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     }
     
     @IBAction func showItem(sender: AnyObject) {
-        guard let id=items.last?.id
+        //guard let id=items.last?.id
+        guard let id=session.items.last?.id
             else {print("Hittade inget id!");return}
         let traderaMessage=service.getItem(id)
         let urlString=TraderaService.publicServiceURL
@@ -176,15 +181,24 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
         request.HTTPBody=traderaMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
         connection!.start()
+        performSegueWithIdentifier("ShowItemSegue", sender: self)
     }
     
+    @IBAction func clearItems(sender: AnyObject) {
+        session.items=[]
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print("prepareForSegue(\(segue.identifier))")
         switch segue.identifier! {
         case "ShowSearchResultsSegue":
             print("Växlar till visning av sökresultat")
             let vc=segue.destinationViewController as! TraderaSearchTableViewController
-            vc.items=items
+            print("session.items: \(session.items)")
+            vc.items=session.items
+        case "ShowItemSegue":
+            print("Växlar till visning av enskild auktion")
+            let vc=segue.destinationViewController as! TraderaItemViewController
+            vc.item=session.items.last
         default: print("Okänd segue: \(segue.identifier)")
         }
     }

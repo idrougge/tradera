@@ -65,6 +65,18 @@ class TraderaSearchTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 96
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("prepareForSegue(\(segue.identifier))")
+        switch segue.identifier! {
+        case "ShowItemSegue":
+            print("Växlar till visning av enskild auktion")
+            let vc=segue.destinationViewController as! TraderaItemViewController
+            vc.item=items?.last
+        default: print("Okänd segue: \(segue.identifier)")
+        }
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

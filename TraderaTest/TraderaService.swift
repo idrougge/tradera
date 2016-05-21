@@ -14,6 +14,7 @@ class TraderaService {
     static let publickey="4e1c7c27-b028-4a34-a61e-0775030a24d1"
     static let publicServiceURL="http://api.tradera.com/v3/PublicService.asmx"
     static let searchServiceURL="http://api.tradera.com/v3/searchservice.asmx"
+    static let xmlns:String="\"http://api.tradera.com\""
     static let dateformatter=NSDateFormatter()
     
     init(){
@@ -81,15 +82,24 @@ class TraderaService {
         }
         return text
     }
+    ///////////////////////////////////////////////
     class XMLParser:NSObject, NSXMLParserDelegate {
-        var currentElementName=""
+        //var currentElementName=""
+        var currentElementName:NSString=""
         var foundItem=false
         var currentItem=[String:String]()
         var errors=0
         var incomplete=0
         var items:[TraderaItem]?
+        let session:TraderaSession
+        
+        init(session:TraderaSession) {
+            self.session=session
+            self.items=session.items
+        }
         // Används av NSXMLParserDelegate
         func parser(parser:NSXMLParser, didStartElement elementName:String, namespaceURI:String?, qualifiedName qName:String?, attributes attributeDict:[String:String]) {
+            print("parser.didStartElement: \(elementName)")
             currentElementName=elementName
             if elementName=="Items" {
                 print("Hittade Item-tagg")
@@ -99,6 +109,7 @@ class TraderaService {
         }
         // Används av NSXMLParserDelegate
         func parser(parser:NSXMLParser, foundCharacters string:String) {
+            print("parser.foundCharacters: \(string)")
             if currentElementName=="GetOfficalTimeResult" {
                 //resultField.text=string
                 let currentTime=NSDate()
@@ -127,8 +138,22 @@ class TraderaService {
                 currentItem[currentElementName as String]=data
             }
         }
+        func parserDidStartDocument(parser: NSXMLParser) {
+            print("parserDidStartDocument:parser")
+        }
+        func parserDidEndDocument(parser:NSXMLParser) {
+            print("parserDidEndDocument:parser")
+        }
+        func parser(parser: NSXMLParser, didStartMappingPrefix prefix:String, toURI namespaceURI:String) {
+            print("parser.didStartMappingPrefix: \(prefix) toURI: \(namespaceURI)")
+        }
+        func parser(parser: NSXMLParser, parseErrorOccurred parseError:NSError) {
+            print("parser.parseErrorOccured: \(parseError.localizedDescription)")
+        }
+        
         // Används av NSXMLParserDelegate
         func parser(parser:NSXMLParser, didEndElement elementName:String, namespaceURI:String?, qualifiedName qName:String?) {
+            print("parser.didEndElement: \(elementName)")
             if elementName=="Items" {
                 print("Hittade slut på Items-tagg")
                 print(currentItem)
@@ -141,7 +166,8 @@ class TraderaService {
                 if let traderaItem=TraderaItem(fromDict: currentItem) {
                     print("Lyckades skapa auktionsobjekt:")
                     print("ID \(traderaItem.id): \(traderaItem.shortDescription)")
-                    items?.append(traderaItem)
+                    //items?.append(traderaItem)
+                    session.items.append(traderaItem)
                     print("Inlagda objekt: \(items?.count)")
                 }
                 else {
@@ -152,6 +178,10 @@ class TraderaService {
                 print("Antal felaktiga objekt: \(errors)")
                 foundItem=false
             }
+        }
+        
+        func parser(parser: NSXMLParser, foundExternalEntityDeclarationWithName name: String, publicID: String?, systemID: String?) {
+            print("parser.foundExternalEntityDeclarationWithName: \(name)")
         }
 
     }

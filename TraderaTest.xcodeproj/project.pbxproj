@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC1AF0051CF0A675008AB27F /* TraderaItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1AF0041CF0A675008AB27F /* TraderaItemViewController.swift */; };
 		DC22FECE1CEE18E600921E68 /* TraderaSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */; };
 		DC22FED01CEE205600921E68 /* TraderaSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22FECF1CEE205600921E68 /* TraderaSearchTableViewController.swift */; };
 		DC22FED41CEF68ED00921E68 /* TraderaSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22FED31CEF68ED00921E68 /* TraderaSession.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC1AF0041CF0A675008AB27F /* TraderaItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaItemViewController.swift; sourceTree = "<group>"; };
 		DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaSearchTableViewCell.swift; sourceTree = "<group>"; };
 		DC22FECF1CEE205600921E68 /* TraderaSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaSearchTableViewController.swift; sourceTree = "<group>"; };
 		DC22FED31CEF68ED00921E68 /* TraderaSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaSession.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				DCE7B8171CEC7C190096D5C9 /* TraderaService.swift */,
 				DC22FED31CEF68ED00921E68 /* TraderaSession.swift */,
 				DCE7B8091CE9F8590096D5C9 /* Main.storyboard */,
+				DC1AF0041CF0A675008AB27F /* TraderaItemViewController.swift */,
 				DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */,
 				DC22FECF1CEE205600921E68 /* TraderaSearchTableViewController.swift */,
 				DCE7B80C1CE9F8590096D5C9 /* Assets.xcassets */,
@@ -154,6 +157,7 @@
 				DC22FECE1CEE18E600921E68 /* TraderaSearchTableViewCell.swift in Sources */,
 				DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */,
 				DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */,
+				DC1AF0051CF0A675008AB27F /* TraderaItemViewController.swift in Sources */,
 				DC22FED41CEF68ED00921E68 /* TraderaSession.swift in Sources */,
 				DC22FED01CEE205600921E68 /* TraderaSearchTableViewController.swift in Sources */,
 				DCE7B81C1CECC6C90096D5C9 /* TraderaItem.swift in Sources */,
