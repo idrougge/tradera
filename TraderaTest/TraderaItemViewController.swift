@@ -28,6 +28,10 @@ class TraderaItemViewController: UIViewController {
         shortDescriptionLabel.text=item.shortDescription
         highestBidLabel.text=String(item.maxBid)
         itemImageView.imageFromURL(item.thumbnailLink)
+        if let parent=parentViewController as? TraderaSearchTableViewController {
+            let grandparent=parent.parentViewController as! ViewController
+            descriptionTextView.text=grandparent.session.description
+        }
     }
 
     override func didReceiveMemoryWarning() {

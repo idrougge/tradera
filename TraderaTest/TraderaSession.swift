@@ -13,4 +13,7 @@ class TraderaSession {
     var token:String?
     //var items:[TraderaItem]?
     var items=[TraderaItem]()
+    // De här behöver flyttas till lämpligt ställe sen
+    var description:String?
+    var imageLink:String?
 }

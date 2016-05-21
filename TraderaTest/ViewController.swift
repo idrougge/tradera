@@ -33,6 +33,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
     }
 
     @IBAction func sendButton(sender: AnyObject) {
+        
         let traderaTimeMessage=service.search()
         let urlString=TraderaService.searchServiceURL
         let url=NSURL(string:urlString)
@@ -45,12 +46,17 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
         //request.HTTPBody=soapMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         request.HTTPBody=traderaTimeMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         // NSURLConnection verkar ha ersatts av NSURLSession
-        let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
-        connection!.start()
+        //let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
+        //connection!.start()
+        /*
         if(connection==true) {
             //var mutableData:Void=NSMutableData.initialize()
         }
+        */
+        TraderaService.URLConnection(message: service.search(), action: "\"http://api.tradera.com/Search\"", session: session)
+        
     }
+
     // Används av NSURLConnectionDataDelegate
     func connection(connection:NSURLConnection!,didReceiveResponse response:NSURLResponse!) {
         mutableData.length=0
@@ -75,7 +81,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
 
     var currentItem=[String:String]()
     var foundItem=false
-    
+
     // Används av NSXMLParserDelegate
     func parser(parser:NSXMLParser, didStartElement elementName:String, namespaceURI:String?, qualifiedName qName:String?, attributes attributeDict:[String:String]) {
         currentElementName=elementName
@@ -142,7 +148,7 @@ class ViewController: UIViewController, UITextFieldDelegate, NSURLConnectionDele
             foundItem=false
         }
     }
-    
+
     @IBAction func showList(sender: AnyObject) {
         performSegueWithIdentifier("ShowSearchResultsSegue", sender: view)
     }

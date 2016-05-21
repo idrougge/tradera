@@ -119,13 +119,11 @@ class TraderaService {
                 guard let timedate=dateformatter.dateFromString(string)
                     else {print("Fel: Kunde inte konvertera datumstämpel!");return}
                 print("timedate=\(timedate)")
-                print("väntetid: \(5*NSEC_PER_SEC)")
-                dispatch_after(5*NSEC_PER_SEC, dispatch_get_main_queue()){
-                    print("currentTime=\(currentTime)")}
             }
             if currentElementName=="TotalNumberOfItems" {
                 print("Hittade \(string) sökträffar")
             }
+            
             if foundItem {
                 var data=""
                 if let oldData=currentItem[currentElementName as String] {
@@ -184,5 +182,62 @@ class TraderaService {
             print("parser.foundExternalEntityDeclarationWithName: \(name)")
         }
 
+    }
+    
+    class URLConnection:NSObject,NSURLConnectionDelegate {
+        var mutableData:NSMutableData=NSMutableData()
+        var currentElementName:NSString=""
+        //let service=TraderaService()
+        //var items:[TraderaItem]?
+        //var items=[TraderaItem]()
+        var errors=0
+        var incomplete=0
+        //let session=TraderaSession()
+        let session:TraderaSession?
+
+        init(message:String, action:String, session:TraderaSession) {
+            
+            self.session=session
+            let urlString=TraderaService.searchServiceURL
+            let url=NSURL(string:urlString)
+            let request=NSMutableURLRequest(URL: url!)
+            let msgLength=message.characters.count
+            request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            request.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
+            //request.addValue("\"http://api.tradera.com/Search\"", forHTTPHeaderField: "SOAPAction")
+            request.addValue(action, forHTTPHeaderField: "SOAPAction")
+            request.HTTPMethod="POST"
+            //request.HTTPBody=soapMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            request.HTTPBody=message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            // NSURLConnection verkar ha ersatts av NSURLSession
+            super.init()
+            let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
+            connection!.start()
+            if(connection==true) {
+                print("connection==true")
+                //var mutableData:Void=NSMutableData.initialize()
+            }
+        }
+        // Används av NSURLConnectionDataDelegate
+        func connection(connection:NSURLConnection!,didReceiveResponse response:NSURLResponse!) {
+            mutableData.length=0
+        }
+        // Används av NSURLConnectionDataDelegate
+        func connection(connection:NSURLConnection!,didReceiveData data:NSData!) {
+            mutableData.appendData(data)
+        }
+        // Används av NSURLConnectionDataDelegate
+        func connectionDidFinishLoading(connection:NSURLConnection) {
+            let response=NSString(data: mutableData, encoding: NSUTF8StringEncoding)
+            print("response: \(response)")
+            let xmlParser=NSXMLParser(data: mutableData)
+            //xmlParser.delegate=self
+            let parserDelegate=TraderaService.XMLParser(session: session!)
+            //xmlParser.delegate=TraderaService.XMLParser(session: session)
+            xmlParser.delegate=parserDelegate
+            //xmlParser.delegate=service.XMLParser(session: session)
+            xmlParser.parse()
+            xmlParser.shouldResolveExternalEntities=true
+        }
     }
 }

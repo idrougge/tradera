@@ -72,7 +72,11 @@ class TraderaSearchTableViewController: UITableViewController {
         case "ShowItemSegue":
             print("Växlar till visning av enskild auktion")
             let vc=segue.destinationViewController as! TraderaItemViewController
-            vc.item=items?.last
+            //vc.item=items?.last
+            if let cell=sender as? TraderaSearchTableViewCell {
+                let row=tableView.indexPathForCell(cell)!.row
+                vc.item=items?[row]
+            }
         default: print("Okänd segue: \(segue.identifier)")
         }
     }
