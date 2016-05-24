@@ -13,4 +13,5 @@ class TraderaSession {
     var token:String?
     var time:String?
     var items=[TraderaItem]()
+    let notifications=NSNotificationCenter()
 }

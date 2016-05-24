@@ -18,47 +18,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Svar:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPb-Yg-Odi">
-                                <rect key="frame" x="74" y="117" width="39" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Svar:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPb-Yg-Odi">
+                                <rect key="frame" x="20" y="117" width="39" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMN-pU-MWk">
-                                <rect key="frame" x="137" y="70" width="45" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMN-pU-MWk">
+                                <rect key="frame" x="68" y="72" width="45" height="30"/>
                                 <state key="normal" title="Skicka"/>
                                 <connections>
                                     <action selector="sendButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T4o-gt-IwN"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3br-Tf-rMO" userLabel="ResultField">
-                                <rect key="frame" x="136" y="108" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Nintendo" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3br-Tf-rMO" userLabel="ResultField">
+                                <rect key="frame" x="67" y="110" width="513" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bn-jE-ZnR">
-                                <rect key="frame" x="137" y="209" width="109" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bn-jE-ZnR">
+                                <rect key="frame" x="68" y="211" width="109" height="30"/>
                                 <state key="normal" title="Visa sökresultat"/>
                                 <connections>
                                     <action selector="showList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8mS-nH-Mgc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DGg-ff-B30">
-                                <rect key="frame" x="137" y="263" width="67" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DGg-ff-B30">
+                                <rect key="frame" x="68" y="265" width="67" height="30"/>
                                 <state key="normal" title="Hämta tid"/>
                                 <connections>
                                     <action selector="showTime:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PDE-D3-jlO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WHf-PJ-Znm">
-                                <rect key="frame" x="137" y="311" width="84" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WHf-PJ-Znm">
+                                <rect key="frame" x="68" y="313" width="84" height="30"/>
                                 <state key="normal" title="Visa auktion"/>
                                 <connections>
                                     <action selector="showItem:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UzU-w9-Q22"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLl-dS-3RB">
-                                <rect key="frame" x="272" y="209" width="98" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLl-dS-3RB">
+                                <rect key="frame" x="203" y="211" width="98" height="30"/>
                                 <state key="normal" title="Rensa resultat"/>
                                 <connections>
                                     <action selector="clearItems:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2yH-Qe-Ngc"/>
@@ -66,6 +66,23 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vMN-pU-MWk" firstAttribute="leading" secondItem="0bn-jE-ZnR" secondAttribute="leading" id="8CM-O5-aTu"/>
+                            <constraint firstItem="DGg-ff-B30" firstAttribute="top" secondItem="0bn-jE-ZnR" secondAttribute="bottom" constant="24" id="9gV-ho-Q6n"/>
+                            <constraint firstItem="DGg-ff-B30" firstAttribute="leading" secondItem="WHf-PJ-Znm" secondAttribute="leading" id="CBm-RI-A3W"/>
+                            <constraint firstItem="3br-Tf-rMO" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Fcp-Ae-Mac"/>
+                            <constraint firstItem="3br-Tf-rMO" firstAttribute="leading" secondItem="aPb-Yg-Odi" secondAttribute="trailing" constant="8" symbolic="YES" id="HV0-Rh-xjh"/>
+                            <constraint firstItem="WHf-PJ-Znm" firstAttribute="top" secondItem="DGg-ff-B30" secondAttribute="bottom" constant="18" id="OP9-o0-JSZ"/>
+                            <constraint firstItem="3br-Tf-rMO" firstAttribute="top" secondItem="vMN-pU-MWk" secondAttribute="bottom" constant="8" symbolic="YES" id="PH5-09-Qdr"/>
+                            <constraint firstItem="vMN-pU-MWk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="48" id="RlR-xk-EUx"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="top" secondItem="3br-Tf-rMO" secondAttribute="bottom" constant="71" id="aFM-1f-BDV"/>
+                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="aRs-f8-S4x"/>
+                            <constraint firstItem="vMN-pU-MWk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="aZH-1N-6fy"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="leading" secondItem="DGg-ff-B30" secondAttribute="leading" id="b3r-GM-8Rd"/>
+                            <constraint firstItem="JLl-dS-3RB" firstAttribute="leading" secondItem="0bn-jE-ZnR" secondAttribute="trailing" constant="26" id="io8-XF-QAT"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="baseline" secondItem="JLl-dS-3RB" secondAttribute="baseline" id="m2T-un-zzc"/>
+                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="53" id="n57-c3-ioc"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FhP-Xt-T22"/>
                     <connections>

@@ -72,6 +72,7 @@ class TraderaSearchTableViewController: UITableViewController {
             if let cell=sender as? TraderaSearchTableViewCell {
                 let row=tableView.indexPathForCell(cell)!.row
                 vc.item=items?[row]
+                //items
             }
         default: print("Okänd segue: \(segue.identifier)")
         }
