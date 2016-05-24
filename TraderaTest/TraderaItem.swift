@@ -7,7 +7,26 @@
 //
 
 import Foundation
-class TraderaItem {
+
+protocol Item {
+    var id:Int{get}
+    var shortDescription:String{get}
+    var description:String?{get set}
+    var buyItNowPrice:Float?{get}
+    var sellerId:Int{get}
+    var sellerAlias:String{get}
+    var maxBid:Float{get}
+    var thumbnailLink:String{get}
+    var imageLink:String?{get set}
+    var sellerDsrAverage:Float{get}
+    var endDate:String{get}
+    var nextBid:Float{get}
+    var hasBids:Bool{get}
+    var isEnded:Bool{get set}
+    var itemType:String{get}
+}
+
+class TraderaItem:Item {
     let id:Int
     let shortDescription:String
     var description:String?
@@ -21,7 +40,7 @@ class TraderaItem {
     let endDate:String
     let nextBid:Float
     let hasBids:Bool
-    let isEnded:Bool
+    var isEnded:Bool
     let itemType:String
     
     init(id:Int,
@@ -51,6 +70,7 @@ class TraderaItem {
         self.isEnded=hasBids
         self.itemType=itemType
     }
+    
     convenience init?(fromDict item:[String:String]) {
         guard let id=item["Id"],
             let shortDescription=item["ShortDescription"],
@@ -69,30 +89,7 @@ class TraderaItem {
             return nil
         }
         let buyItNowPrice=item["BuyItNowPrice"] ?? "0"
-/*
-        let hasBidsBool=NSString(string: hasBids).boolValue
-        let isEndedBool=NSString(string: isEnded).boolValue
-        let idInt=Int(id)
-        let sellerIdInt=Int(sellerId)
-*/
-//        guard let sellerIdInt=Int(sellerId)
-        //guard let sellerIdInt=Int(item["SellerId"] as? String)
-        //    else {return}
         
         self.init(id: Int(id)!, shortDescription: shortDescription, buyItNowPrice: Float(buyItNowPrice), sellerId: Int(sellerId)!, sellerAlias: sellerAlias, maxBid: Float(maxBid)!, thumbnailLink: thumbnailLink, sellerDsrAverage: Float(sellerDsrAverage)!, endDate: endDate, nextBid: Float(nextBid)!, hasBids: NSString(string:hasBids).boolValue, isEnded: NSString(string:isEnded).boolValue, itemType: itemType)
-    }
-}
-import UIKit
-extension UIImageView {
-    public func imageFromURL(urlstring:String) {
-        if let url=NSURL(string: urlstring) {
-            let request=NSURLRequest(URL: url)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()){
-                (response:NSURLResponse?, data:NSData?, error:NSError?) -> Void in
-                if let data=data {
-                    self.image=UIImage(data: data)
-                }
-            }
-        }
     }
 }

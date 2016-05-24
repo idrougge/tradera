@@ -47,12 +47,8 @@ class TraderaSearchTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("TraderaSearchTableViewCell", forIndexPath: indexPath) as! TraderaSearchTableViewCell
         let row=indexPath.row
         // Det är (ganska) säkert att använda utropstecknet här då numberOfRowsInSection returnerat 0 om items=nil
-        //cell.priceLabel.text="\(row)"
-        //cell.descriptionLabel.text="Rad nr \(indexPath.row)"
         cell.descriptionLabel.text=items![row].shortDescription
-        //cell.priceLabel.text="\(items![row].maxBid)"
         cell.priceLabel.text=currency.stringFromNumber(items![row].maxBid)
-        //cell.itemImage.imageFromURL(items![row].thumbnailLink)
         print("bildstorlek: \(cell.itemImage.image?.size)")
         return cell
     }

@@ -30,7 +30,7 @@ class TraderaItemViewController: UIViewController {
         itemImageView.imageFromURL(item.thumbnailLink)
         if let parent=parentViewController as? TraderaSearchTableViewController {
             let grandparent=parent.parentViewController as! ViewController
-            descriptionTextView.text=grandparent.session.description
+            //descriptionTextView.text=grandparent.session.description
         }
     }
 

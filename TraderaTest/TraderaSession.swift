@@ -11,9 +11,6 @@ import Foundation
 class TraderaSession {
     let service=TraderaService()
     var token:String?
-    //var items:[TraderaItem]?
+    var time:String?
     var items=[TraderaItem]()
-    // De här behöver flyttas till lämpligt ställe sen
-    var description:String?
-    var imageLink:String?
 }
