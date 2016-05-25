@@ -11,7 +11,7 @@ import Foundation
 protocol Item {
     var id:Int{get}
     var shortDescription:String{get}
-    var description:String?{get set}
+    var longDescription:String?{get set}
     var buyItNowPrice:Float?{get}
     var sellerId:Int{get}
     var sellerAlias:String{get}
@@ -29,7 +29,7 @@ protocol Item {
 class TraderaItem:Item {
     let id:Int
     let shortDescription:String
-    var description:String?
+    var longDescription:String?
     let buyItNowPrice:Float?
     let sellerId:Int
     let sellerAlias:String

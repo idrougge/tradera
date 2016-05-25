@@ -86,7 +86,7 @@ extension Dictionary {
 //                                                     //
 // TraderaService har även interna klasser:            //
 // XMLParser med tillhörande interna klasser           //
-// tolkar SOAP-data som hämtats av URLConnection       //
+// tolkar SOAP-data som hämtats av URLConnection.      //
 /////////////////////////////////////////////////////////
 class TraderaService {
     static let appid=1589
@@ -96,8 +96,12 @@ class TraderaService {
     static let searchServiceURL="http://api.tradera.com/v3/searchservice.asmx"
     static let xmlns:String="\"http://api.tradera.com\""
     static let dateformatter=NSDateFormatter()
+    static let currency=NSNumberFormatter()
     struct notifications {
         static let didFinishParsing="didFinishParsing"
+        static let gotTime="gotTime"
+        static let gotItem="gotItem"
+        static let didFinishSearching="didFinishSearching"
     }
     static let preamble="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
     static let header=String(format:"\(preamble)    <soap:Header>    <AuthenticationHeader xmlns=\"http://api.tradera.com\">    <AppId>%d</AppId>    <AppKey>%@</AppKey>    </AuthenticationHeader>    <ConfigurationHeader xmlns=\"http://api.tradera.com\"></ConfigurationHeader>    </soap:Header>",appid,servicekey)
@@ -105,6 +109,8 @@ class TraderaService {
     ///// INIT /////
     init(){
         TraderaService.dateformatter.dateFormat="yyyy-MM-dd'T'HH:mm:ss.SSS"
+        TraderaService.currency.numberStyle=NSNumberFormatterStyle.CurrencyStyle
+        TraderaService.currency.minimumFractionDigits=0
     }
     ///// GETOFFICIALTIME /////
     func getOfficialTime() -> String {
@@ -130,8 +136,18 @@ class TraderaService {
     func getItem(id:Int) -> String {
         let opts=["itemId":String(id)]
         let req=["soap:Body":["GetItem xmlns=\"http://api.tradera.com\"":opts]]
+        //print("req=\(req)")
+        //print(XMLTree(req))
+        return XMLRequest(req)
+    }
+    ///// GETCATEGORIES /////
+    func getCategories() -> String {
+        var req=[String:AnyObject]()
+        //req["soap:Body"]=["<GetCategories xmlns=\(TraderaService.xmlns)/>"]
+        req["soap:Body"]="<soap:GetCategories/>"
+        //let req=["soap:Body":opts]
         print("req=\(req)")
-        print(XMLTree(req))
+        print("xml=\(XMLRequest(req))")
         return XMLRequest(req)
     }
     ///// XMLREQUEST /////
@@ -188,22 +204,26 @@ class TraderaService {
             print("parser.didStartElement: \(elementName)")
             currentElementName=elementName
             currentElement=nil
-            if elementName=="GetOfficalTimeResult" {
+            switch elementName {
+            case "GetOfficalTimeResult":
                 delegate=timeParser(session: session)
                 parser.delegate=delegate
-            }
-            if elementName=="SearchResult" {
+            case"SearchResult":
                 delegate=searchParser(session: session)
                 parser.delegate=delegate
-            }
-            if elementName=="GetItemResult" {
+            case "GetItemResult":
                 delegate=auctionParser(session: session, parent: self)
                 parser.delegate=delegate
+            case "GetCategoriesResult":
+                delegate=categoriesParser(session: session, parent: self)
+                parser.delegate=delegate
+            default:
+                print("Hoppar över element: \(elementName)")
             }
         }
         func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-            print("parser.didEndElement: \(elementName)")
-            print("\(elementName)=\(currentItem[elementName])")
+            //print("parser.didEndElement: \(elementName)")
+            //print("\(elementName)=\(currentItem[elementName])")
         }
         func parser(parser: NSXMLParser, foundCharacters string: String) {
             currentElement=(currentElement ?? "")+string
@@ -213,6 +233,9 @@ class TraderaService {
             errors+=1
         }
         //////////// timeParser ////////////
+        // Läser in tiden och konverterar //
+        // till NSDate i TraderaSession.  //
+        ////////////////////////////////////
         class timeParser:XMLParser {
             override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
                 if elementName=="GetOfficalTimeResult" {
@@ -224,10 +247,14 @@ class TraderaService {
                         else {print("Fel: Kunde inte konvertera datumstämpel!");return}
                     print("timedate=\(timedate)")
                     session.time=String(timedate)
+                    session.notifications.postNotificationName(TraderaService.notifications.gotTime, object: nil)
                 }
             }
         }
         //////////// searchParser ////////////
+        // Läser in sökresultat till listan //
+        // items i TraderaSession.          //
+        //////////////////////////////////////
         class searchParser:XMLParser {
             var item=[String:String]()
             
@@ -248,9 +275,14 @@ class TraderaService {
                         session.items.append(searchItem)
                     }
                 }
+                if elementName=="SearchResult" {
+                    session.notifications.postNotificationName(TraderaService.notifications.didFinishSearching, object: self)
+                }
             }
         }
         //////////// auctionParser ////////////
+        // Läser in en enskild auktion.      //
+        ///////////////////////////////////////
         class auctionParser:XMLParser {
             let parent:XMLParser?
             var item=[String:AnyObject]()
@@ -266,33 +298,32 @@ class TraderaService {
             override func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
                 path.append(elementName)
                 print("path=\(path.dotPath())")
-                //item.setValue("", forKeyPath: path.dotPath())
-                //item.setValue("bla", forKeyPath: path)
-                //print("item=\(item)")
                 currentElement=nil
             }
             //// didEndElement ////
             override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-                print("->path=\(path)")
+                //print("->path=\(path)")
                 if elementName=="GetItemResult" {
                     print("Hittade slut på GetItemResult")
                     print("item=\(item)")
                     makeItem()
                     parser.delegate=parent
                 }
-                if elementName == "LongDescription" {path.popLast();return} // debug t v
-                print("\(elementName) bör vara \(currentElement ?? "tom")")
+                //if elementName == "LongDescription" {path.popLast();return} // mindre skräp i konsolen
+                //print("\(elementName) bör vara \(currentElement ?? "tom")")
 
                 guard let element=currentElement
-                    else {print("Försökte sätta \(path.dotPath()) till nil-värde"); path.popLast(); return}
+                    else {
+                        //print("Försökte sätta \(path.dotPath()) till nil-värde")
+                        path.popLast(); return}
                 item.setValue(element, forKeyPath: path)
                 
                 if elementName==path.last {
                     path.popLast()
                 }
-                print("item=\(item)")
+                //print("item=\(item)")
                 currentElement=nil
-                print("<-path=\(path)")
+                //print("<-path=\(path)")
             }
             func makeItem() {
                 var auctionItem=[String:String]()
@@ -312,8 +343,50 @@ class TraderaService {
                 print("auctionItem=\(auctionItem)")
                 if let traderaItem=TraderaItem(fromDict: auctionItem) {
                     print("Lyckades skapa auktionsobjekt")
+                    traderaItem.longDescription=item["LongDescription"] as? String
+                    traderaItem.imageLink=item["ImageLinks"]?["string"] as? String
+                    session.notifications.postNotificationName(TraderaService.notifications.gotItem, object: traderaItem)
                 }
                 else {print("Misslyckades med att skapa auktionsobjekt")}
+            }
+        }
+        //////// categoriesParser ////////
+        // Läser in alla kategorier.    //
+        //////////////////////////////////
+        class categoriesParser:XMLParser {
+            let parent:XMLParser?
+            var categories=[String:AnyObject]()
+            var path=[String]()
+            var lastElementName=""
+            
+            init(session: TraderaSession, parent:XMLParser) {
+                self.parent=parent
+                super.init(session: session)
+            }
+            //// didStartElement ////
+            override func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+                print("attributeDict=\(attributeDict)")
+                guard let id=attributeDict["Id"], let name=attributeDict["Name"] else {
+                    print("Hittade inga giltiga attribut!"); return
+                }
+                path.append(id)
+                
+                print("path=\(path.dotPath())")
+                
+                categories.setValue(name, forKeyPath: path)
+                
+                currentElement=nil
+            }
+
+            //// didEndElement ////
+            override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+                
+                path.popLast()
+                if elementName=="GetCategoriesResult" {
+                    print("Hittade slut på GetCategoriesResult")
+                    print("categories=\(categories)")
+                    parser.delegate=parent
+                }
             }
         }
     }
@@ -374,7 +447,6 @@ class TraderaService {
             //xmlParser.delegate=service.XMLParser(session: session)
             if xmlParser.parse() {
                 print("Parsningen avslutades.")
-                session?.notifications.postNotificationName("notification", object: self)
                 session?.notifications.postNotificationName(TraderaService.notifications.didFinishParsing, object: self)
             }
             xmlParser.shouldResolveExternalEntities=true

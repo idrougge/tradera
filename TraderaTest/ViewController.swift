@@ -23,9 +23,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //print(TraderaService.publickey)
-        //print(TraderaService.header)
+        resultField.resignFirstResponder()
+        //session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing, object: nil)
         session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing, object: nil)
+        session.notifications.addObserver(self, selector: #selector(showSearch), name: TraderaService.notifications.didFinishSearching, object: nil)
+        session.notifications.addObserver(self, selector: #selector(showTime), name: TraderaService.notifications.gotTime, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,92 +35,59 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func didReceiveNotification() {
-        print("Mottog anrop till NSNotificationCenter!")
+    func didReceiveNotification(notification:NSNotification) {
+        print("ViewController mottog anrop \"\(notification.name)\" till NSNotificationCenter!")
+        print("objekt: \(notification.object)")
+    }
+    func showTime() {
+        print("Mottog tidsuppdatering")
+        resultField.text=session.time
     }
 
     @IBAction func sendButton(sender: AnyObject) {
-        let traderaTimeMessage=service.search("Nintendo")
-        let urlString=TraderaService.searchServiceURL
-        let url=NSURL(string:urlString)
-        let request=NSMutableURLRequest(URL: url!)
-        let msgLength=traderaTimeMessage.characters.count
-        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
-        request.addValue("\"http://api.tradera.com/Search\"", forHTTPHeaderField: "SOAPAction")
-        request.HTTPMethod="POST"
-        //request.HTTPBody=soapMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-        request.HTTPBody=traderaTimeMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-        // NSURLConnection verkar ha ersatts av NSURLSession
-        //let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
-        //connection!.start()
-        /*
-        if(connection==true) {
-            //var mutableData:Void=NSMutableData.initialize()
-        }
-        */
-        let connection=TraderaService.URLConnection(message: service.search(resultField.text!), action: "\"http://api.tradera.com/Search\"", session: session, url: TraderaService.searchServiceURL)
+        let connection=TraderaService.URLConnection(message: service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
+        //let connection=TraderaService.URLConnection(message: service.search(resultField.text!), action: "\"http://api.tradera.com/Search\"", session: session, url: TraderaService.searchServiceURL)
         // Uppkopplingen är asynkron
     }
    
     @IBAction func showList(sender: AnyObject) {
+        sendButton("")
+        //performSegueWithIdentifier("ShowSearchResultsSegue", sender: view)
+    }
+    func showSearch() {
+        print("Sökresultat hittades")
         performSegueWithIdentifier("ShowSearchResultsSegue", sender: view)
     }
-    
-    @IBAction func showTime(sender: AnyObject) {
-        let traderaTimeMessage=service.getOfficialTime()
-        let urlString=TraderaService.publicServiceURL
-        let url=NSURL(string:urlString)
-        let request=NSMutableURLRequest(URL: url!)
-        let msgLength=traderaTimeMessage.characters.count
-        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
-        request.addValue("\"http://api.tradera.com/GetOfficalTime\"", forHTTPHeaderField: "SOAPAction")
-        request.HTTPMethod="POST"
-        request.HTTPBody=traderaTimeMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-        //let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
+
+    @IBAction func getTime(sender: AnyObject) {
         let connection=TraderaService.URLConnection(message: service.getOfficialTime(), action: "\"http://api.tradera.com/GetOfficalTime\"", session: session, url: TraderaService.publicServiceURL)
-        //connection!.start()
-        if(connection==true) {
-            print("Kopplade upp")
-        }
         resultField.text=session.time
     }
     
     @IBAction func showItem(sender: AnyObject) {
-        //guard let id=items.last?.id
         guard let id=session.items.last?.id
             else {print("Hittade inget id!");return}
-        let traderaMessage=service.getItem(id)
-        let urlString=TraderaService.publicServiceURL
-        let url=NSURL(string: urlString)
-        let request=NSMutableURLRequest(URL: url!)
-        let msgLength=traderaMessage.characters.count
-        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
-        request.HTTPMethod="POST"
-        request.HTTPBody=traderaMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         let connection=TraderaService.URLConnection(message: service.getItem(id), action: "\"http://api.tradera.com/GetItem\"", session: session, url: TraderaService.publicServiceURL)
-        //connection!.start()
         //performSegueWithIdentifier("ShowItemSegue", sender: self)
-        resultField.text=session.time
     }
     
     @IBAction func clearItems(sender: AnyObject) {
         session.items=[]
     }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print("prepareForSegue(\(segue.identifier))")
         switch segue.identifier! {
         case "ShowSearchResultsSegue":
             print("Växlar till visning av sökresultat")
             let vc=segue.destinationViewController as! TraderaSearchTableViewController
+            vc.session=session
             print("session.items: \(session.items)")
             vc.items=session.items
         case "ShowItemSegue":
             print("Växlar till visning av enskild auktion")
             let vc=segue.destinationViewController as! TraderaItemViewController
-            vc.item=session.items.last
+            //vc.item=session.items.last
         default: print("Okänd segue: \(segue.identifier)")
         }
     }

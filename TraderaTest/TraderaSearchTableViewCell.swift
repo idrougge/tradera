@@ -17,7 +17,7 @@ class TraderaSearchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        backgroundColor=UIColor.yellowColor()
+        //backgroundColor=UIColor.yellowColor()
         //frame=CGRect(x: 1, y: 1, width: frame.width, height: 96)
     }
 

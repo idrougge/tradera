@@ -10,6 +10,7 @@ import UIKit
 
 class TraderaSearchTableViewController: UITableViewController {
 
+    var session:TraderaSession?
     var items:[TraderaItem]?
     let currency=NSNumberFormatter()
     
@@ -68,11 +69,12 @@ class TraderaSearchTableViewController: UITableViewController {
         case "ShowItemSegue":
             print("Växlar till visning av enskild auktion")
             let vc=segue.destinationViewController as! TraderaItemViewController
-            //vc.item=items?.last
+            vc.session=session
             if let cell=sender as? TraderaSearchTableViewCell {
                 let row=tableView.indexPathForCell(cell)!.row
-                vc.item=items?[row]
-                //items
+                let id=items?[row].id
+                let connection=TraderaService.URLConnection(message: session!.service.getItem(id!), action: "\"http://api.tradera.com/GetItem\"", session: session!, url: TraderaService.publicServiceURL)
+
             }
         default: print("Okänd segue: \(segue.identifier)")
         }

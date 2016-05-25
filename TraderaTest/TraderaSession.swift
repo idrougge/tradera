@@ -8,6 +8,12 @@
 
 import Foundation
 
+//////////////////////////////////////////////////
+// TraderaSession hanterar globala data för den //
+// aktuella sessionen såsom klocka, inloggning  //
+// och listor över mottagna sökresultat.        //
+//////////////////////////////////////////////////
+
 class TraderaSession {
     let service=TraderaService()
     var token:String?
