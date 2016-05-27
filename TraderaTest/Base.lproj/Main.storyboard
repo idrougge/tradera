@@ -39,7 +39,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bn-jE-ZnR">
                                 <rect key="frame" x="20" y="211" width="151" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="151" id="t36-TC-XSU"/>
+                                    <constraint firstAttribute="width" constant="151" id="eGf-hP-Pc9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="Sök auktioner"/>
@@ -68,29 +68,72 @@
                                     <action selector="clearItems:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2yH-Qe-Ngc"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SDD-ab-pAo">
+                                <rect key="frame" x="20" y="389" width="560" height="191"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="191" id="unx-WU-c6t"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="shitcell" editingAccessoryType="disclosureIndicator" id="rWj-qG-VQW" customClass="TraderaCategoryTableViewCell" customModule="TraderaTest" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rWj-qG-VQW" id="7Hj-Oo-4b3">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-JV-hRx">
+                                                    <rect key="frame" x="14" y="8" width="133" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="133" id="Y6U-ii-FfW"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="XKq-JV-hRx" firstAttribute="top" secondItem="7Hj-Oo-4b3" secondAttribute="topMargin" id="QeJ-A7-Xb1"/>
+                                                <constraint firstItem="XKq-JV-hRx" firstAttribute="leading" secondItem="7Hj-Oo-4b3" secondAttribute="leadingMargin" constant="6" id="uji-4R-afV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="categoryLabel" destination="XKq-JV-hRx" id="doL-K3-F2B"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="QPp-5V-75t"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="zpP-Qm-ElT"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="3br-Tf-rMO" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8LR-J7-brS"/>
-                            <constraint firstItem="WHf-PJ-Znm" firstAttribute="top" secondItem="DGg-ff-B30" secondAttribute="bottom" constant="20" id="HNs-z3-QUW"/>
-                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Qq8-m4-Vcs"/>
-                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="baseline" secondItem="JLl-dS-3RB" secondAttribute="baseline" id="TzM-WA-bug"/>
-                            <constraint firstItem="3br-Tf-rMO" firstAttribute="top" secondItem="aPb-Yg-Odi" secondAttribute="bottom" constant="17" id="bSm-8V-qWM"/>
-                            <constraint firstItem="3br-Tf-rMO" firstAttribute="trailing" secondItem="JLl-dS-3RB" secondAttribute="trailing" id="dWg-Fg-tVi"/>
-                            <constraint firstItem="3br-Tf-rMO" firstAttribute="leading" secondItem="0bn-jE-ZnR" secondAttribute="leading" id="dwQ-DH-Kpn"/>
-                            <constraint firstItem="DGg-ff-B30" firstAttribute="top" secondItem="0bn-jE-ZnR" secondAttribute="bottom" constant="22" id="eNG-s8-g0d"/>
-                            <constraint firstItem="DGg-ff-B30" firstAttribute="leading" secondItem="WHf-PJ-Znm" secondAttribute="leading" id="hUS-zL-Axb"/>
-                            <constraint firstItem="vMN-pU-MWk" firstAttribute="top" secondItem="WHf-PJ-Znm" secondAttribute="bottom" constant="8" symbolic="YES" id="jgL-Cb-hfi"/>
-                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="nXS-L1-ojD"/>
-                            <constraint firstItem="WHf-PJ-Znm" firstAttribute="leading" secondItem="vMN-pU-MWk" secondAttribute="leading" id="oHa-Of-kPy"/>
-                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="top" secondItem="3br-Tf-rMO" secondAttribute="bottom" constant="71" id="vbE-dn-4QZ"/>
-                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="leading" secondItem="DGg-ff-B30" secondAttribute="leading" id="vta-7t-rHm"/>
-                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="leading" secondItem="3br-Tf-rMO" secondAttribute="leading" id="zKl-6V-U6N"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="FZZ-O8-pa5"/>
+                            <constraint firstItem="DGg-ff-B30" firstAttribute="top" secondItem="0bn-jE-ZnR" secondAttribute="bottom" constant="22" id="G4U-HN-DhB"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="WHf-PJ-Znm" secondAttribute="leading" id="GvT-YB-yNf"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="trailing" secondItem="3br-Tf-rMO" secondAttribute="trailing" id="HTL-tn-QZ5"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="trailing" secondItem="JLl-dS-3RB" secondAttribute="trailing" id="J1r-t5-UGi"/>
+                            <constraint firstItem="WHf-PJ-Znm" firstAttribute="top" secondItem="DGg-ff-B30" secondAttribute="bottom" constant="20" id="YtD-5q-CEK"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="3br-Tf-rMO" secondAttribute="leading" id="hqa-57-6FI"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="0bn-jE-ZnR" secondAttribute="leading" id="kIb-37-erf"/>
+                            <constraint firstItem="vMN-pU-MWk" firstAttribute="top" secondItem="WHf-PJ-Znm" secondAttribute="bottom" constant="8" symbolic="YES" id="lKx-t4-U7C"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="DGg-ff-B30" secondAttribute="leading" id="lSJ-J6-h9V"/>
+                            <constraint firstAttribute="bottom" secondItem="SDD-ab-pAo" secondAttribute="bottom" constant="20" symbolic="YES" id="pQT-sy-KpO"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="baseline" secondItem="JLl-dS-3RB" secondAttribute="baseline" id="rEb-Hv-mlH"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="top" secondItem="3br-Tf-rMO" secondAttribute="bottom" constant="71" id="tI2-b0-qsg"/>
+                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="vdK-zl-VrO"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="vMN-pU-MWk" secondAttribute="leading" id="wU4-Eo-NBH"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="top" secondItem="vMN-pU-MWk" secondAttribute="bottom" constant="8" symbolic="YES" id="x5O-HU-wu8"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="y4b-Vu-vxB"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="aPb-Yg-Odi" secondAttribute="leading" id="yD5-ev-HIt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tradera" id="FhP-Xt-T22"/>
                     <connections>
                         <outlet property="resultField" destination="3br-Tf-rMO" id="Ja0-ol-SNS"/>
+                        <outlet property="tableview" destination="SDD-ab-pAo" id="IiX-Wz-cWO"/>
                         <segue destination="TB7-am-ceX" kind="show" identifier="ShowSearchResultsSegue" id="VwF-s7-RAv"/>
                     </connections>
                 </viewController>
@@ -290,7 +333,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qtt-wv-IVN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="341" y="251"/>
+            <point key="canvasLocation" x="392" y="251"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Tp-YC-Bg0">

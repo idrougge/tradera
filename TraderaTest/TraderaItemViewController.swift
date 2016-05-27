@@ -24,7 +24,7 @@ class TraderaItemViewController: UIViewController {
         
         session?.notifications.addObserver(self,
                                            selector: #selector(update),
-                                           name: TraderaService.notifications.gotItem,
+                                           name: TraderaService.notifications.gotItem.rawValue,
                                            object: nil)
     }
 

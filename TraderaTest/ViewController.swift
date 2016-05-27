@@ -19,15 +19,22 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var items=[TraderaItem]()
     var errors=0
     var incomplete=0
+    @IBOutlet weak var tableview: UITableView!
+    let categoryDelegate=CategoryTableViewDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // Hämta kategorier
+        let _=TraderaService.URLConnection(message: service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
+        tableview.delegate=categoryDelegate
+        tableview.dataSource=categoryDelegate
+        //tableview.reloadData()
         resultField.resignFirstResponder()
         //session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing, object: nil)
-        session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing, object: nil)
-        session.notifications.addObserver(self, selector: #selector(showSearch), name: TraderaService.notifications.didFinishSearching, object: nil)
-        session.notifications.addObserver(self, selector: #selector(showTime), name: TraderaService.notifications.gotTime, object: nil)
+        session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing.rawValue, object: nil)
+        session.notifications.addObserver(self, selector: #selector(showSearch), name: TraderaService.notifications.didFinishSearching.rawValue, object: nil)
+        session.notifications.addObserver(self, selector: #selector(showTime), name: TraderaService.notifications.gotTime.rawValue, object: nil)
+        session.notifications.addObserver(self, selector: #selector(reloadCategories), name: TraderaService.notifications.gotCategories.rawValue, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,14 +46,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
         print("ViewController mottog anrop \"\(notification.name)\" till NSNotificationCenter!")
         print("objekt: \(notification.object)")
     }
+    func reloadCategories() {
+        print("Läser in kategorierna igen")
+        tableview.reloadData()
+    }
     func showTime() {
         print("Mottog tidsuppdatering")
         resultField.text=session.time
     }
 
     @IBAction func sendButton(sender: AnyObject) {
-        let connection=TraderaService.URLConnection(message: service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
-        //let connection=TraderaService.URLConnection(message: service.search(resultField.text!), action: "\"http://api.tradera.com/Search\"", session: session, url: TraderaService.searchServiceURL)
+        //let connection=TraderaService.URLConnection(message: service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
+        let connection=TraderaService.URLConnection(message: service.search(resultField.text!), action: "\"http://api.tradera.com/Search\"", session: session, url: TraderaService.searchServiceURL)
         // Uppkopplingen är asynkron
     }
    
@@ -86,7 +97,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             vc.items=session.items
         case "ShowItemSegue":
             print("Växlar till visning av enskild auktion")
-            let vc=segue.destinationViewController as! TraderaItemViewController
+            //let vc=segue.destinationViewController as! TraderaItemViewController
             //vc.item=session.items.last
         default: print("Okänd segue: \(segue.identifier)")
         }
