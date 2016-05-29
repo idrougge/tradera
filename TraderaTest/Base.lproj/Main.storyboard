@@ -39,7 +39,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bn-jE-ZnR">
                                 <rect key="frame" x="20" y="211" width="151" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="151" id="eGf-hP-Pc9"/>
+                                    <constraint firstAttribute="width" constant="151" id="969-Wj-z9V"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="Sök auktioner"/>
@@ -71,9 +71,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SDD-ab-pAo">
                                 <rect key="frame" x="20" y="389" width="560" height="191"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="191" id="unx-WU-c6t"/>
-                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="shitcell" editingAccessoryType="disclosureIndicator" id="rWj-qG-VQW" customClass="TraderaCategoryTableViewCell" customModule="TraderaTest" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
@@ -110,24 +107,25 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="FZZ-O8-pa5"/>
-                            <constraint firstItem="DGg-ff-B30" firstAttribute="top" secondItem="0bn-jE-ZnR" secondAttribute="bottom" constant="22" id="G4U-HN-DhB"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="WHf-PJ-Znm" secondAttribute="leading" id="GvT-YB-yNf"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="trailing" secondItem="3br-Tf-rMO" secondAttribute="trailing" id="HTL-tn-QZ5"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="trailing" secondItem="JLl-dS-3RB" secondAttribute="trailing" id="J1r-t5-UGi"/>
-                            <constraint firstItem="WHf-PJ-Znm" firstAttribute="top" secondItem="DGg-ff-B30" secondAttribute="bottom" constant="20" id="YtD-5q-CEK"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="3br-Tf-rMO" secondAttribute="leading" id="hqa-57-6FI"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="0bn-jE-ZnR" secondAttribute="leading" id="kIb-37-erf"/>
-                            <constraint firstItem="vMN-pU-MWk" firstAttribute="top" secondItem="WHf-PJ-Znm" secondAttribute="bottom" constant="8" symbolic="YES" id="lKx-t4-U7C"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="DGg-ff-B30" secondAttribute="leading" id="lSJ-J6-h9V"/>
-                            <constraint firstAttribute="bottom" secondItem="SDD-ab-pAo" secondAttribute="bottom" constant="20" symbolic="YES" id="pQT-sy-KpO"/>
-                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="baseline" secondItem="JLl-dS-3RB" secondAttribute="baseline" id="rEb-Hv-mlH"/>
-                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="top" secondItem="3br-Tf-rMO" secondAttribute="bottom" constant="71" id="tI2-b0-qsg"/>
-                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="vdK-zl-VrO"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="vMN-pU-MWk" secondAttribute="leading" id="wU4-Eo-NBH"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="top" secondItem="vMN-pU-MWk" secondAttribute="bottom" constant="8" symbolic="YES" id="x5O-HU-wu8"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="y4b-Vu-vxB"/>
-                            <constraint firstItem="SDD-ab-pAo" firstAttribute="leading" secondItem="aPb-Yg-Odi" secondAttribute="leading" id="yD5-ev-HIt"/>
+                            <constraint firstItem="vMN-pU-MWk" firstAttribute="top" secondItem="WHf-PJ-Znm" secondAttribute="bottom" constant="8" symbolic="YES" id="2xJ-DT-0yE"/>
+                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="38h-Qz-KPy"/>
+                            <constraint firstItem="SDD-ab-pAo" firstAttribute="top" secondItem="vMN-pU-MWk" secondAttribute="bottom" constant="8" symbolic="YES" id="B81-tg-6ZB"/>
+                            <constraint firstItem="3br-Tf-rMO" firstAttribute="leading" secondItem="0bn-jE-ZnR" secondAttribute="leading" id="D77-sR-8e5"/>
+                            <constraint firstItem="DGg-ff-B30" firstAttribute="leading" secondItem="WHf-PJ-Znm" secondAttribute="leading" id="DdL-D2-bP0"/>
+                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="leading" secondItem="3br-Tf-rMO" secondAttribute="leading" id="GPY-yo-DhV"/>
+                            <constraint firstItem="WHf-PJ-Znm" firstAttribute="top" secondItem="DGg-ff-B30" secondAttribute="bottom" constant="20" id="GaI-M0-bAX"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="top" secondItem="3br-Tf-rMO" secondAttribute="bottom" constant="71" id="KNV-3l-l5v"/>
+                            <constraint firstItem="vMN-pU-MWk" firstAttribute="leading" secondItem="SDD-ab-pAo" secondAttribute="leading" id="TML-zq-HdA"/>
+                            <constraint firstItem="JLl-dS-3RB" firstAttribute="trailing" secondItem="SDD-ab-pAo" secondAttribute="trailing" id="avm-IE-HT4"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="leading" secondItem="DGg-ff-B30" secondAttribute="leading" id="d0b-Pr-jHY"/>
+                            <constraint firstAttribute="bottom" secondItem="SDD-ab-pAo" secondAttribute="bottom" constant="20" symbolic="YES" id="izA-qF-Bk3"/>
+                            <constraint firstItem="DGg-ff-B30" firstAttribute="top" secondItem="0bn-jE-ZnR" secondAttribute="bottom" constant="22" id="jcY-cs-PK1"/>
+                            <constraint firstItem="WHf-PJ-Znm" firstAttribute="leading" secondItem="vMN-pU-MWk" secondAttribute="leading" id="ky5-oG-z7I"/>
+                            <constraint firstItem="0bn-jE-ZnR" firstAttribute="baseline" secondItem="JLl-dS-3RB" secondAttribute="baseline" id="oIk-zK-H8b"/>
+                            <constraint firstItem="aPb-Yg-Odi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="sce-hq-lLv"/>
+                            <constraint firstItem="3br-Tf-rMO" firstAttribute="top" secondItem="aPb-Yg-Odi" secondAttribute="bottom" constant="17" id="tog-7V-1eh"/>
+                            <constraint firstItem="3br-Tf-rMO" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="v8D-bw-Vbi"/>
+                            <constraint firstItem="3br-Tf-rMO" firstAttribute="trailing" secondItem="JLl-dS-3RB" secondAttribute="trailing" id="yZw-7O-T72"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tradera" id="FhP-Xt-T22"/>

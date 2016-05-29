@@ -24,11 +24,17 @@ class CategoryTableViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("\(#function): row=\(indexPath.row)")
+        let row=indexPath.row
+        print("\(#function): row=\(row)")
         let cell = tableView.dequeueReusableCellWithIdentifier("shitcell", forIndexPath: indexPath) as! TraderaCategoryTableViewCell
-        cell.categoryLabel.text="Kategori \(indexPath.row)"
-        cell.categoryLabel.text=categories?[indexPath.row].name
-        cell.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator
+        cell.categoryLabel.text="Kategori \(row)"
+        cell.categoryLabel.text=categories?[row].name
+        if categories?[row].sub != nil {
+            cell.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator
+        }
+        else {
+            cell.accessoryType=UITableViewCellAccessoryType.None
+        }
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
