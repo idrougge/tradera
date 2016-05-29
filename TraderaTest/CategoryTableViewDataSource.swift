@@ -26,8 +26,8 @@ class CategoryTableViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let row=indexPath.row
         print("\(#function): row=\(row)")
-        let cell = tableView.dequeueReusableCellWithIdentifier("shitcell", forIndexPath: indexPath) as! TraderaCategoryTableViewCell
-        cell.categoryLabel.text="Kategori \(row)"
+        let cell = tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath) as! TraderaCategoryTableViewCell
+        //cell.categoryLabel.text="Kategori \(row)"
         cell.categoryLabel.text=categories?[row].name
         if categories?[row].sub != nil {
             cell.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator

@@ -24,6 +24,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let _=TraderaService.URLConnection(message: session.service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
         tableview.delegate=categoryDelegate
         tableview.dataSource=categoryDelegate
+        
+        tableview.registerNib(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+        
         resultField.resignFirstResponder()
         session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing.rawValue, object: nil)
         session.notifications.addObserver(self, selector: #selector(showSearch), name: TraderaService.notifications.didFinishSearching.rawValue, object: nil)

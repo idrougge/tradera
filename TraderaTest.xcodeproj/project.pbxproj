@@ -14,6 +14,10 @@
 		DC3862251CF5F2F400E6D2CB /* CategoryTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3862241CF5F2F400E6D2CB /* CategoryTableViewDataSource.swift */; };
 		DC3862291CF7114200E6D2CB /* TraderaCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3862281CF7114200E6D2CB /* TraderaCategoryTableViewCell.swift */; };
 		DC38622B1CF86DA800E6D2CB /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC38622A1CF86DA800E6D2CB /* Types.swift */; };
+		DC38622F1CFB597600E6D2CB /* CreateAuctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC38622E1CFB597600E6D2CB /* CreateAuctionViewController.swift */; };
+		DC3862311CFB59B300E6D2CB /* SelectTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3862301CFB59B300E6D2CB /* SelectTimeViewController.swift */; };
+		DC3862331CFB59E200E6D2CB /* SelectCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3862321CFB59E200E6D2CB /* SelectCategoryViewController.swift */; };
+		DC3862351CFB68BB00E6D2CB /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC3862341CFB68BB00E6D2CB /* CategoryTableViewCell.xib */; };
 		DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */; };
 		DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8071CE9F8590096D5C9 /* ViewController.swift */; };
 		DCE7B80B1CE9F8590096D5C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B8091CE9F8590096D5C9 /* Main.storyboard */; };
@@ -31,6 +35,10 @@
 		DC3862241CF5F2F400E6D2CB /* CategoryTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewDataSource.swift; sourceTree = "<group>"; };
 		DC3862281CF7114200E6D2CB /* TraderaCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		DC38622A1CF86DA800E6D2CB /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		DC38622E1CFB597600E6D2CB /* CreateAuctionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAuctionViewController.swift; sourceTree = "<group>"; };
+		DC3862301CFB59B300E6D2CB /* SelectTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectTimeViewController.swift; sourceTree = "<group>"; };
+		DC3862321CFB59E200E6D2CB /* SelectCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCategoryViewController.swift; sourceTree = "<group>"; };
+		DC3862341CFB68BB00E6D2CB /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
 		DCE7B8021CE9F8590096D5C9 /* TraderaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraderaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCE7B8071CE9F8590096D5C9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +87,11 @@
 				DCE7B8171CEC7C190096D5C9 /* TraderaService.swift */,
 				DC22FED31CEF68ED00921E68 /* TraderaSession.swift */,
 				DCE7B8091CE9F8590096D5C9 /* Main.storyboard */,
+				DC3862341CFB68BB00E6D2CB /* CategoryTableViewCell.xib */,
 				DC3862241CF5F2F400E6D2CB /* CategoryTableViewDataSource.swift */,
+				DC38622E1CFB597600E6D2CB /* CreateAuctionViewController.swift */,
+				DC3862301CFB59B300E6D2CB /* SelectTimeViewController.swift */,
+				DC3862321CFB59E200E6D2CB /* SelectCategoryViewController.swift */,
 				DC3862281CF7114200E6D2CB /* TraderaCategoryTableViewCell.swift */,
 				DC1AF0041CF0A675008AB27F /* TraderaItemViewController.swift */,
 				DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */,
@@ -150,6 +162,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC3862351CFB68BB00E6D2CB /* CategoryTableViewCell.xib in Resources */,
 				DCE7B8101CE9F8590096D5C9 /* LaunchScreen.storyboard in Resources */,
 				DCE7B80D1CE9F8590096D5C9 /* Assets.xcassets in Resources */,
 				DCE7B80B1CE9F8590096D5C9 /* Main.storyboard in Resources */,
@@ -165,10 +178,13 @@
 			files = (
 				DC22FECE1CEE18E600921E68 /* TraderaSearchTableViewCell.swift in Sources */,
 				DC3862291CF7114200E6D2CB /* TraderaCategoryTableViewCell.swift in Sources */,
+				DC3862331CFB59E200E6D2CB /* SelectCategoryViewController.swift in Sources */,
+				DC3862311CFB59B300E6D2CB /* SelectTimeViewController.swift in Sources */,
 				DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */,
 				DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */,
 				DC3862251CF5F2F400E6D2CB /* CategoryTableViewDataSource.swift in Sources */,
 				DC1AF0051CF0A675008AB27F /* TraderaItemViewController.swift in Sources */,
+				DC38622F1CFB597600E6D2CB /* CreateAuctionViewController.swift in Sources */,
 				DC22FED41CEF68ED00921E68 /* TraderaSession.swift in Sources */,
 				DC22FED01CEE205600921E68 /* TraderaSearchTableViewController.swift in Sources */,
 				DCE7B81C1CECC6C90096D5C9 /* TraderaItem.swift in Sources */,

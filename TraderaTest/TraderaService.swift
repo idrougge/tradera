@@ -135,6 +135,7 @@ class TraderaService {
     static let publicServiceURL="http://api.tradera.com/v3/PublicService.asmx"
     static let searchServiceURL="http://api.tradera.com/v3/searchservice.asmx"
     static let xmlns:String="\"http://api.tradera.com\""
+    static var sandbox=true
     static let dateformatter=NSDateFormatter()
     static let currency=NSNumberFormatter()
     static var categories:[Category]?
@@ -399,7 +400,7 @@ class TraderaService {
                     print("Hittade inga giltiga attribut!"); return
                 }
                 let category=Category(name, id)
-                print("path=\(path.dotPath())")
+                //print("path=\(path.dotPath())")
                 categories.setValue(category, forKeyPath: path)
                 path.append(category)
                 currentElement=nil
