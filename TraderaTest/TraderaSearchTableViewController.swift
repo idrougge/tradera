@@ -72,7 +72,7 @@ class TraderaSearchTableViewController: UITableViewController {
             if let cell=sender as? TraderaSearchTableViewCell {
                 let row=tableView.indexPathForCell(cell)!.row
                 let id=items?[row].id
-                let connection=TraderaService.URLConnection(message: session!.service.getItem(id!), action: "\"http://api.tradera.com/GetItem\"", session: session!, url: TraderaService.publicServiceURL)
+                let _=TraderaService.URLConnection(message: session!.service.getItem(id!), action: "\"http://api.tradera.com/GetItem\"", session: session!, url: TraderaService.publicServiceURL)
 
             }
         default: print("Okänd segue: \(segue.identifier)")

@@ -28,6 +28,16 @@ extension SequenceType where Generator.Element == String {
         return self.joinWithSeparator(".")
     }
 }
+extension SequenceType where Generator.Element == Category {
+    func dotPath() -> String {
+        //return self.description.joinWithSeparator(".")
+        //let strings=self as! [String]
+        let strings=self.map{ (category) -> String in
+            return category.name
+        }
+        return strings.joinWithSeparator(".")
+    }
+}
 ///////////////////////////////////////////////////////////
 // Utökning av UIImageView för att ladda bilder från URL //
 ///////////////////////////////////////////////////////////
@@ -46,14 +56,44 @@ extension UIImageView {
     }
 }
 /////////////////////////////////////////////////////////////
+// Utökning av Array (eller Collection för att få en del av//
+// NSDictionarys funktionalitet. Används för att kunna     //
+// sätta värden i nästlade listor när XML-dokument parsas. //
+/////////////////////////////////////////////////////////////
+extension MutableCollectionType where Generator.Element==Category {
+    mutating func setValue(val:Category, forKeyPath keyPath:[Category]) {
+        var cats=self as! [Category]
+        if keyPath.isEmpty {
+            cats.append(val)
+            // Sortering verkar onödig då kategorierna returneras i alfabetisk ordning
+            /*
+            cats.sortInPlace() {
+                return $0.name.localizedCompare($1.name)==NSComparisonResult.OrderedAscending
+            }*/
+            self=cats as! Self
+            return
+        }
+        var path=keyPath
+        let first=path.removeFirst()
+        guard let index=self.indexOf(first) as? Int else {
+            return
+        }
+        if cats[index].sub==nil {
+            cats[index].sub=[]
+        }
+        cats[index].sub?.setValue(val, forKeyPath: path)
+        self=cats as! Self
+    }
+}
+/////////////////////////////////////////////////////////////
 // Utökning av Dictionary för att få en del av             //
 // NSDictionarys funktionalitet. Används för att kunna     //
 // sätta värden i nästlade listor när XML-dokument parsas. //
 /////////////////////////////////////////////////////////////
 extension Dictionary {
-    public mutating func setValue(val:String, forKeyPath:[String]) {
-        if forKeyPath.isEmpty {return}
-        var path=forKeyPath
+    public mutating func setValue(val:String, forKeyPath keyPath:[String]) {
+        if keyPath.isEmpty {return}
+        var path=keyPath
         //print("setValue anropades med värde \(val) och sökväg \(path.dotPath())")
         let first=path.removeFirst()
         guard let key=first as? Key else {print("Ogiltig nyckel!"); return}
@@ -97,7 +137,7 @@ class TraderaService {
     static let xmlns:String="\"http://api.tradera.com\""
     static let dateformatter=NSDateFormatter()
     static let currency=NSNumberFormatter()
-    static var categories:[String:AnyObject]?
+    static var categories:[Category]?
     enum notifications:String {
         case didFinishParsing,
         gotTime,
@@ -129,16 +169,12 @@ class TraderaService {
         opts["pageNumber"]="1"
         opts["orderBy"]="Relevance"
         req["soap:Body"]=["Search xmlns=\"http://api.tradera.com\"":opts]
-        //print("req=\(req)")
-        //print(XMLTree(req))
         return XMLRequest(req)
     }
     ///// GETITEM /////
     func getItem(id:Int) -> String {
         let opts=["itemId":String(id)]
         let req=["soap:Body":["GetItem xmlns=\"http://api.tradera.com\"":opts]]
-        //print("req=\(req)")
-        //print(XMLTree(req))
         return XMLRequest(req)
     }
     ///// GETCATEGORIES /////
@@ -347,11 +383,14 @@ class TraderaService {
         //////////////////////////////////
         class categoriesParser:XMLParser {
             let parent:XMLParser?
-            var categories=[String:AnyObject]()
-            var path=[String]()
+            var categories=[Category]()
+            var path=[Category]()
             
             init(session: TraderaSession, parent:XMLParser) {
                 self.parent=parent
+                let maincat=Category("Alla kategorier", 0)
+                categories.append(maincat)
+                path.append(maincat)
                 super.init(session: session)
             }
             //// didStartElement ////
@@ -359,9 +398,10 @@ class TraderaService {
                 guard let id=attributeDict["Id"], let name=attributeDict["Name"] else {
                     print("Hittade inga giltiga attribut!"); return
                 }
-                path.append(name)
-                //print("path=\(path.dotPath())")
-                categories.setValue(id, forKeyPath: path+["id"])
+                let category=Category(name, id)
+                print("path=\(path.dotPath())")
+                categories.setValue(category, forKeyPath: path)
+                path.append(category)
                 currentElement=nil
             }
 
@@ -370,7 +410,7 @@ class TraderaService {
                 path.popLast()
                 if elementName=="GetCategoriesResult" {
                     print("Hittade slut på GetCategoriesResult")
-                    //print("categories=\(categories)")
+                    print("categories=\(categories)")
                     TraderaService.categories=categories
                     session.notifications.postNotificationName(TraderaService.notifications.gotCategories.rawValue, object: nil)
                     parser.delegate=parent
@@ -381,38 +421,31 @@ class TraderaService {
     ///////////////////////////////////////////////////////////
     // URLConnection hanterar asynkron hämtning av SOAP-data //
     // från Tradera och delegerar tolkningen till XMLParser. //
+    // NSURLConnection verkar ha ersatts av NSURLSession     //
+    // men vi kör på URLConnection för bakåtkompatibilitet.  //
     ///////////////////////////////////////////////////////////
     class URLConnection:NSObject,NSURLConnectionDelegate {
         var mutableData:NSMutableData=NSMutableData()
         var currentElementName:NSString=""
-        //let service=TraderaService()
-        //var items:[TraderaItem]?
-        //var items=[TraderaItem]()
         var errors=0
         var incomplete=0
-        //let session=TraderaSession()
         let session:TraderaSession?
 
         init(message:String, action:String, session:TraderaSession, url urlString:String) {
             self.session=session
-            //let urlString=TraderaService.searchServiceURL
             let url=NSURL(string:urlString)
             let request=NSMutableURLRequest(URL: url!)
             let msgLength=message.characters.count
             request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
-            //request.addValue("\"http://api.tradera.com/Search\"", forHTTPHeaderField: "SOAPAction")
             request.addValue(action, forHTTPHeaderField: "SOAPAction")
             request.HTTPMethod="POST"
-            //request.HTTPBody=soapMessage.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
             request.HTTPBody=message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-            // NSURLConnection verkar ha ersatts av NSURLSession
             super.init()
             let connection=NSURLConnection(request: request, delegate: self, startImmediately: true)
             connection!.start()
             if(connection==true) {
                 print("connection==true")
-                //var mutableData:Void=NSMutableData.initialize()
             }
         }
         // Används av NSURLConnectionDataDelegate
@@ -425,14 +458,9 @@ class TraderaService {
         }
         // Används av NSURLConnectionDataDelegate
         func connectionDidFinishLoading(connection:NSURLConnection) {
-            let response=NSString(data: mutableData, encoding: NSUTF8StringEncoding)
-            //print("response: \(response)")
             let xmlParser=NSXMLParser(data: mutableData)
-            //xmlParser.delegate=self
             let parserDelegate=TraderaService.XMLParser(session: session!)
-            //xmlParser.delegate=TraderaService.XMLParser(session: session)
             xmlParser.delegate=parserDelegate
-            //xmlParser.delegate=service.XMLParser(session: session)
             if xmlParser.parse() {
                 print("Parsningen avslutades.")
                 session?.notifications.postNotificationName(TraderaService.notifications.didFinishParsing.rawValue, object: self)

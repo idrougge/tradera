@@ -9,11 +9,13 @@
 import Foundation
 import UIKit
 
-//let locale = NSLocale(localeIdentifier: "se")
-
 class CategoryTableViewDataSource: NSObject, UITableViewDelegate, UITableViewDataSource {
+    //let locale = NSLocale(localeIdentifier: "se")
+    var path=[Category]()
+    var categories=TraderaService.categories
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let nrOfRows=(TraderaService.categories?.keys.count ?? 0)!
+        let nrOfRows=categories?.count ?? 0
         print("\(#function): numberOfRowsInSection \(section)=\(nrOfRows)")
         return nrOfRows
     }
@@ -25,20 +27,24 @@ class CategoryTableViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
         print("\(#function): row=\(indexPath.row)")
         let cell = tableView.dequeueReusableCellWithIdentifier("shitcell", forIndexPath: indexPath) as! TraderaCategoryTableViewCell
         cell.categoryLabel.text="Kategori \(indexPath.row)"
-        guard let categories=TraderaService.categories else {
-            print("Kunde inte läsa ut TraderaService.categories!")
-            return cell
-        }
-        //let cats=[String](categories.keys)
-        var cats=[String](categories.keys)
-        cats=cats.sort() {
-            return $0.localizedCompare($1)==NSComparisonResult.OrderedAscending
-        }
-        cell.categoryLabel.text=cats[indexPath.row]
+        cell.categoryLabel.text=categories?[indexPath.row].name
         cell.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //
+        let row=indexPath.row
+        print("Klickade på rad \(row) i sektion \(indexPath.section)")
+        print("Hämtar underkategorier till \(categories?[row])")
+        guard let selectedCategory=categories?[row] else {
+            print("Kunde inte läsa ut subkategori ur TraderaService.categories!")
+            return
+        }
+        guard let cats=selectedCategory.sub else {
+            print("Kunde inte läsa ut subkategori ur \(selectedCategory)!")
+            return
+        }
+        print("Underkategorin innehåller \(cats)")
+        categories=cats
+        tableView.reloadData()
     }
 }

@@ -14,23 +14,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var mutableData:NSMutableData=NSMutableData()
     var currentElementName:NSString=""
     let session=TraderaSession()
-    let service=TraderaService()
-    //var items:[TraderaItem]?
-    var items=[TraderaItem]()
-    var errors=0
-    var incomplete=0
+    //let service=session.service
     @IBOutlet weak var tableview: UITableView!
     let categoryDelegate=CategoryTableViewDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Hämta kategorier
-        let _=TraderaService.URLConnection(message: service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
+        let _=TraderaService.URLConnection(message: session.service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
         tableview.delegate=categoryDelegate
         tableview.dataSource=categoryDelegate
-        //tableview.reloadData()
         resultField.resignFirstResponder()
-        //session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing, object: nil)
         session.notifications.addObserver(self, selector: #selector(didReceiveNotification), name: TraderaService.notifications.didFinishParsing.rawValue, object: nil)
         session.notifications.addObserver(self, selector: #selector(showSearch), name: TraderaService.notifications.didFinishSearching.rawValue, object: nil)
         session.notifications.addObserver(self, selector: #selector(showTime), name: TraderaService.notifications.gotTime.rawValue, object: nil)
@@ -48,6 +42,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     func reloadCategories() {
         print("Läser in kategorierna igen")
+        categoryDelegate.categories=TraderaService.categories
         tableview.reloadData()
     }
     func showTime() {
@@ -57,7 +52,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func sendButton(sender: AnyObject) {
         //let connection=TraderaService.URLConnection(message: service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
-        let connection=TraderaService.URLConnection(message: service.search(resultField.text!), action: "\"http://api.tradera.com/Search\"", session: session, url: TraderaService.searchServiceURL)
+        let _=TraderaService.URLConnection(message: session.service.search(resultField.text!), action: "\"http://api.tradera.com/Search\"", session: session, url: TraderaService.searchServiceURL)
         // Uppkopplingen är asynkron
     }
    
@@ -71,14 +66,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func getTime(sender: AnyObject) {
-        let connection=TraderaService.URLConnection(message: service.getOfficialTime(), action: "\"http://api.tradera.com/GetOfficalTime\"", session: session, url: TraderaService.publicServiceURL)
+        let _=TraderaService.URLConnection(message: session.service.getOfficialTime(), action: "\"http://api.tradera.com/GetOfficalTime\"", session: session, url: TraderaService.publicServiceURL)
         resultField.text=session.time
     }
     
     @IBAction func showItem(sender: AnyObject) {
         guard let id=session.items.last?.id
             else {print("Hittade inget id!");return}
-        let connection=TraderaService.URLConnection(message: service.getItem(id), action: "\"http://api.tradera.com/GetItem\"", session: session, url: TraderaService.publicServiceURL)
+        let _=TraderaService.URLConnection(message: session.service.getItem(id), action: "\"http://api.tradera.com/GetItem\"", session: session, url: TraderaService.publicServiceURL)
         //performSegueWithIdentifier("ShowItemSegue", sender: self)
     }
     
