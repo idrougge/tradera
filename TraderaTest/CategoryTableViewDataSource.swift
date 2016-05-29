@@ -42,9 +42,10 @@ class CategoryTableViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
         print("Klickade på rad \(row) i sektion \(indexPath.section)")
         print("Hämtar underkategorier till \(categories?[row])")
         guard let selectedCategory=categories?[row] else {
-            print("Kunde inte läsa ut subkategori ur TraderaService.categories!")
+            print("Kunde inte läsa ut kategori ur TraderaService.categories!")
             return
         }
+        path.append(selectedCategory)
         guard let cats=selectedCategory.sub else {
             print("Kunde inte läsa ut subkategori ur \(selectedCategory)!")
             return

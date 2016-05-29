@@ -9,7 +9,15 @@
 import UIKit
 
 class CreateAuctionViewController: UIViewController {
-
+    ///// OUTLETS /////
+    @IBOutlet weak var shortDescriptionTextField: UITextField!
+    @IBOutlet weak var longDescriptionTextView: UITextView!
+    @IBOutlet weak var startingTimeButton: UIButton!
+    @IBOutlet weak var endingTimeButton: UIButton!
+    @IBOutlet weak var categoryButton: UIButton!
+    ///// IVARS /////
+    var item=[String:String]()
+    /////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\(NSString(string: #file).lastPathComponent).\(#function)")
@@ -22,15 +30,22 @@ class CreateAuctionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        print("\(#function): \(segue.identifier)")
+        switch segue.identifier! {
+        case "SelectStartingTimeSegue", "SelectEndingTimeSegue":
+            let vc=segue.destinationViewController as! SelectTimeViewController
+            vc.parent=self
+        case "SelectCategorySegue":
+            let vc=segue.destinationViewController as! SelectCategoryViewController
+            vc.parent=self
+        default:
+            print("Okänd segue!")
+        }
     }
-    */
+
+    @IBAction func createAuction(sender: AnyObject) {
+        //
+    }
 
 }

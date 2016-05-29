@@ -80,6 +80,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //performSegueWithIdentifier("ShowItemSegue", sender: self)
     }
     
+    @IBAction func schenker(sender: AnyObject) {
+        session.notifications.addObserver(self, selector: #selector(showSchenker), name: TraderaService.notifications.gotSchenker.rawValue, object: nil)
+        let _=TraderaService.URLConnection(message: session.service.schenker(), action: "\"http://privpakservices.schenker.nu/SearchCollectionPoint\"", session: session, url: TraderaService.schenkerURL)
+    }
+    func showSchenker(notification:NSNotification) {
+        let res=notification.object
+        performSegueWithIdentifier("SchenkerSegue", sender: res)
+    }
+    
     @IBAction func clearItems(sender: AnyObject) {
         session.items=[]
     }
@@ -97,6 +106,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             print("Växlar till visning av enskild auktion")
             //let vc=segue.destinationViewController as! TraderaItemViewController
             //vc.item=session.items.last
+        case "SchenkerSegue":
+            print("Växlar till Schenkersökning")
+            let vc=segue.destinationViewController as! SchenkerViewController
+            vc.collectionpoint=sender as? [String:String]
         default: print("Okänd segue: \(segue.identifier)")
         }
     }

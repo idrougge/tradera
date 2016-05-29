@@ -132,8 +132,10 @@ class TraderaService {
     static let appid=1589
     static let servicekey="52227af6-11f2-4b9a-b321-0c6b97d24d76"
     static let publickey="4e1c7c27-b028-4a34-a61e-0775030a24d1"
+    static let schenkerkey="3B-EC-BA-B2-3D-B5-DF-62-D9-1F-E0-65-B7-89-68-C4"
     static let publicServiceURL="http://api.tradera.com/v3/PublicService.asmx"
     static let searchServiceURL="http://api.tradera.com/v3/searchservice.asmx"
+    static let schenkerURL="http://privpakservices.schenker.nu/package/package_1.3/packageservices.asmx"
     static let xmlns:String="\"http://api.tradera.com\""
     static var sandbox=true
     static let dateformatter=NSDateFormatter()
@@ -144,7 +146,8 @@ class TraderaService {
         gotTime,
         gotItem,
         didFinishSearching,
-        gotCategories
+        gotCategories,
+        gotSchenker
     }
     static let preamble="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
     static let header=String(format:"\(preamble)    <soap:Header>    <AuthenticationHeader xmlns=\"http://api.tradera.com\">    <AppId>%d</AppId>    <AppKey>%@</AppKey>    </AuthenticationHeader>    <ConfigurationHeader xmlns=\"http://api.tradera.com\"></ConfigurationHeader>    </soap:Header>",appid,servicekey)
@@ -183,6 +186,29 @@ class TraderaService {
         var req=[String:AnyObject]()
         req["soap:Body"]="<soap:GetCategories/>"
         return XMLRequest(req)
+    }
+    ///// SEARCHCOLLECTIONPOINT /////
+    func schenker() -> String {
+        var req=[String:AnyObject]()
+        req["CustomerID"]="1"
+        req["key"]=TraderaService.schenkerkey
+        req["ParamID"]="0"
+        req["Postcode"]="28140"
+        req["maxhits"]="3"
+        req=["SearchCollectionPoint":req]
+        req=["soap:Body":req]
+        print(schenkerXMLRequest(req))
+        return schenkerXMLRequest(req)
+    }
+    ///// SCHENKERXMLREQUEST /////
+    func schenkerXMLRequest(dict:[String:AnyObject]) -> String {
+        var xml="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
+        for (key,value) in dict {
+            xml+=XMLTree([key:value])
+        }
+        xml+="</soap:Envelope>"
+        //print(xml)
+        return xml
     }
     ///// XMLREQUEST /////
     func XMLRequest(dict:[String:AnyObject]) -> String {
@@ -247,6 +273,9 @@ class TraderaService {
                 parser.delegate=delegate
             case "GetCategoriesResult":
                 delegate=categoriesParser(session: session, parent: self)
+                parser.delegate=delegate
+            case "SearchCollectionPointResult":
+                delegate=schenkerParser(session: session, parent: self)
                 parser.delegate=delegate
             default:
                 //print("Hoppar över element: \(elementName)")
@@ -418,6 +447,34 @@ class TraderaService {
                 }
             }
         }
+        ///////// schenkerParser /////////////
+        // Läser in närmaste Schenkerombud. //
+        //////////////////////////////////////
+        class schenkerParser:XMLParser {
+            let parent:XMLParser?
+            var collectionpoint=[String:String]()
+            
+            init(session: TraderaSession, parent:XMLParser) {
+                self.parent=parent
+                super.init(session: session)
+            }
+            //// didStartElement ////
+            override func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+                currentElement=nil
+            }
+            
+            //// didEndElement ////
+            override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+                if elementName=="SearchCollectionPointResult" {
+                    print("Hittade slut på SearchCollectionPointResult")
+                    print("Ombudets info: \(collectionpoint)")
+                    session.notifications.postNotificationName(TraderaService.notifications.gotSchenker.rawValue, object: collectionpoint)
+                    parser.delegate=parent
+                    return
+                }
+                collectionpoint[elementName]=currentElement
+            }
+        }
     }
     ///////////////////////////////////////////////////////////
     // URLConnection hanterar asynkron hämtning av SOAP-data //
@@ -459,6 +516,7 @@ class TraderaService {
         }
         // Används av NSURLConnectionDataDelegate
         func connectionDidFinishLoading(connection:NSURLConnection) {
+            print("\(#function): data=\(NSString(data:mutableData, encoding: NSUTF8StringEncoding))")
             let xmlParser=NSXMLParser(data: mutableData)
             let parserDelegate=TraderaService.XMLParser(session: session!)
             xmlParser.delegate=parserDelegate
