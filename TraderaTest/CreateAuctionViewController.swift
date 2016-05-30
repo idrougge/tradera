@@ -23,12 +23,16 @@ class CreateAuctionViewController: UIViewController, UITextFieldDelegate {
     var startingTime:NSDate?
     var endingTime:NSDate?
     /////////////////
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\(NSString(string: #file).lastPathComponent).\(#function)")
         // Do any additional setup after loading the view.
         startingBidTextField.delegate=self
         buyNowTextField.delegate=self
+        let tapToHideKeyboard=UITapGestureRecognizer(target: self, action: #selector(textFieldShouldEndEditing))
+        
+        view.addGestureRecognizer(tapToHideKeyboard)
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +53,12 @@ class CreateAuctionViewController: UIViewController, UITextFieldDelegate {
             print("Okänd segue!")
         }
     }
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        print("\(#function): \(textField)")
         textField.resignFirstResponder()
         return true
     }

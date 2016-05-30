@@ -196,7 +196,7 @@ class TraderaService {
         req["ns1:postcode"]="28140"
         req["ns1:address"]=""
         req["ns1:city"]=""
-        req["ns1:maxhits"]="3"
+        req["ns1:maxhits"]="1"
         req=["ns1:SearchCollectionPoint":req]
         req=["SOAP-ENV:Body":req]
         print(schenkerXMLRequest(req))
@@ -518,7 +518,7 @@ class TraderaService {
         }
         // Används av NSURLConnectionDataDelegate
         func connectionDidFinishLoading(connection:NSURLConnection) {
-            print("\(#function): data=\(NSString(data:mutableData, encoding: NSUTF8StringEncoding))")
+            //print("\(#function): data=\(NSString(data:mutableData, encoding: NSUTF8StringEncoding))")
             let xmlParser=NSXMLParser(data: mutableData)
             let parserDelegate=TraderaService.XMLParser(session: session!)
             xmlParser.delegate=parserDelegate
