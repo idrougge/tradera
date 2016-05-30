@@ -190,23 +190,25 @@ class TraderaService {
     ///// SEARCHCOLLECTIONPOINT /////
     func schenker() -> String {
         var req=[String:AnyObject]()
-        req["CustomerID"]="1"
-        req["key"]=TraderaService.schenkerkey
-        req["ParamID"]="0"
-        req["Postcode"]="28140"
-        req["maxhits"]="3"
-        req=["SearchCollectionPoint":req]
-        req=["soap:Body":req]
+        req["ns1:customerID"]="1"
+        req["ns1:key"]=TraderaService.schenkerkey
+        req["ns1:paramID"]="0"
+        req["ns1:postcode"]="28140"
+        req["ns1:address"]=""
+        req["ns1:city"]=""
+        req["ns1:maxhits"]="3"
+        req=["ns1:SearchCollectionPoint":req]
+        req=["SOAP-ENV:Body":req]
         print(schenkerXMLRequest(req))
         return schenkerXMLRequest(req)
     }
     ///// SCHENKERXMLREQUEST /////
     func schenkerXMLRequest(dict:[String:AnyObject]) -> String {
-        var xml="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
+        var xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?>        <SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://privpakservices.schenker.nu/\">"
         for (key,value) in dict {
             xml+=XMLTree([key:value])
         }
-        xml+="</soap:Envelope>"
+        xml+="</SOAP-ENV:Envelope>"
         //print(xml)
         return xml
     }

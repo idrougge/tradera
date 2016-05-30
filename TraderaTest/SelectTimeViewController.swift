@@ -13,44 +13,39 @@ class SelectTimeViewController: UIViewController {
     @IBOutlet weak var startingDatePicker: UIDatePicker!
     @IBOutlet weak var endingDatePicker: UIDatePicker!
     var parent:CreateAuctionViewController?
+    let dateformatter=NSDateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\(NSString(string: #file).lastPathComponent).\(#function)")
         // Do any additional setup after loading the view.
-        print("parentViewController=\(parentViewController)")
+        //dateformatter.dateFormat="MM-dd HH:mm"
+        dateformatter.dateStyle = .MediumStyle
+        dateformatter.timeStyle = .ShortStyle
+        guard let startingTime=parent?.startingTime, endingTime=parent?.endingTime else {
+            print("Ingen giltig tid i moderkontrollern!")
+            return
+        }
+        startingDatePicker.date=startingTime
+        endingDatePicker.date=endingTime
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    override func willMoveToParentViewController(parent: UIViewController?) {
-        print("\(#function): \(parent)")
-        //if parent is CreateAuctionViewController {
-        if let vc=parent as? CreateAuctionViewController {
-            print("Rätt mamma")
-            //let vc=parent as! CreateAuctionViewController
-            vc.startingTimeButton.setTitle("ny tid", forState: UIControlState.Normal)
-        }
-    }
-    override func didMoveToParentViewController(parent: UIViewController?) {
-        print("\(#function): \(parent)")
-        //if parent is CreateAuctionViewController {
-        if let vc=parent as? CreateAuctionViewController {
-            print("Rätt mamma")
-            //let vc=parent as! CreateAuctionViewController
-            vc.startingTimeButton.setTitle("ny tid", forState: UIControlState.Normal)
-        }
-    }
+    
     override func viewWillDisappear(animated: Bool) {
         print("\(#function)")
-        let startingTime=startingDatePicker.date.description
-        let endingTime=endingDatePicker.date.description
-        parent?.endingTimeButton.setTitle(startingTime, forState: UIControlState.Normal)
-        parent?.startingTimeButton.setTitle(endingTime, forState: UIControlState.Normal)
-        parent?.item["startingTime"]=startingTime
-        parent?.item["endingTime"]=endingTime
+        //let startingTime=startingDatePicker.date.description
+        let startingTime=dateformatter.stringFromDate(startingDatePicker.date)
+        let endingTime=dateformatter.stringFromDate(endingDatePicker.date)
+        parent?.startingTimeButton.setTitle(startingTime, forState: UIControlState.Normal)
+        parent?.endingTimeButton.setTitle(endingTime, forState: UIControlState.Normal)
+        parent?.item["startingTime"]=startingDatePicker.date.description
+        parent?.item["endingTime"]=endingDatePicker.date.description
+        parent?.startingTime=startingDatePicker.date
+        parent?.endingTime=endingDatePicker.date
     }
 
     /*
