@@ -30,6 +30,7 @@ class SelectCategoryViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let row=indexPath.row
         print("\(NSString(string: #file).lastPathComponent).\(#function) didSelectRow: \(row)")
+        tableView.reloadData()
         if tableViewDataSource.categories?[row].sub == nil {
             //tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath).accessoryType = .Checkmark
             tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
