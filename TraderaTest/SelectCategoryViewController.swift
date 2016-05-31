@@ -8,30 +8,38 @@
 
 import UIKit
 
-class SelectCategoryViewController: UIViewController {
-
-    var parent:CreateAuctionViewController?
-    let tableViewDelegate=CategoryTableViewDataSource()
+class SelectCategoryViewController: UIViewController, UITableViewDelegate {
+    ///// OUTLETS /////
     @IBOutlet weak var categoryTableView: UITableView!
+    ///// IVARS /////
+    var parent:CreateAuctionViewController?
+    let tableViewDataSource=CategoryTableViewDataSource()
     
+    ///// VIEWDIDLOAD /////
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\(NSString(string: #file).lastPathComponent).\(#function)")
         // Do any additional setup after loading the view.
-        tableViewDelegate.categories=TraderaService.categories
+        tableViewDataSource.categories=TraderaService.categories
         categoryTableView.registerNib(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
-        categoryTableView.delegate=tableViewDelegate
-        categoryTableView.dataSource=tableViewDelegate
+        //categoryTableView.delegate=tableViewDataSource
+        categoryTableView.delegate=self
+        categoryTableView.dataSource=tableViewDataSource
         categoryTableView.reloadData()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let row=indexPath.row
+        print("\(NSString(string: #file).lastPathComponent).\(#function) didSelectRow: \(row)")
+        if tableViewDataSource.categories?[row].sub == nil {
+            //tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath).accessoryType = .Checkmark
+            tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
+        }
+        tableViewDataSource.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+        self.title=tableViewDataSource.path.last?.description
     }
     
     override func viewWillDisappear(animated: Bool) {
-        parent?.categoryButton.setTitle(tableViewDelegate.path.last?.name, forState: .Normal)
+        parent?.categoryButton.setTitle(tableViewDataSource.path.last?.name, forState: .Normal)
     }
 
 }

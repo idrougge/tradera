@@ -34,6 +34,7 @@ class CategoryTableViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
         }
         else {
             cell.accessoryType=UITableViewCellAccessoryType.None
+            //cell.accessoryType=UITableViewCellAccessoryType.
         }
         return cell
     }

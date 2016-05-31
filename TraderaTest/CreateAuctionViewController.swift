@@ -31,8 +31,8 @@ class CreateAuctionViewController: UIViewController, UITextFieldDelegate {
         startingBidTextField.delegate=self
         buyNowTextField.delegate=self
         let tapToHideKeyboard=UITapGestureRecognizer(target: self, action: #selector(textFieldShouldEndEditing))
-        
         view.addGestureRecognizer(tapToHideKeyboard)
+        self.navigationController?.title="Hej"
     }
 
     override func didReceiveMemoryWarning() {

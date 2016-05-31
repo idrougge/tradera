@@ -20,8 +20,9 @@ class SelectTimeViewController: UIViewController {
         print("\(NSString(string: #file).lastPathComponent).\(#function)")
         // Do any additional setup after loading the view.
         //dateformatter.dateFormat="MM-dd HH:mm"
-        dateformatter.dateStyle = .MediumStyle
-        dateformatter.timeStyle = .ShortStyle
+        //dateformatter.dateStyle = .MediumStyle
+        //dateformatter.timeStyle = .ShortStyle
+        dateformatter.dateFormat="EEEE d MMM 'kl' H:mm"
         guard let startingTime=parent?.startingTime, endingTime=parent?.endingTime else {
             print("Ingen giltig tid i moderkontrollern!")
             return
