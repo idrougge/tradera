@@ -208,18 +208,18 @@ class TraderaService {
     }
     
     ///// SEARCHCOLLECTIONPOINT /////
-    func schenker() -> String {
+    func schenker(postcode:String) -> String {
         var req=[String:AnyObject]()
         req["ns1:customerID"]="1"
         req["ns1:key"]=TraderaService.schenkerkey
         req["ns1:paramID"]="0"
-        req["ns1:postcode"]="28140"
+        req["ns1:postcode"]=postcode
         req["ns1:address"]=""
         req["ns1:city"]=""
         req["ns1:maxhits"]="1"
         req=["ns1:SearchCollectionPoint":req]
         req=["SOAP-ENV:Body":req]
-        print(schenkerXMLRequest(req))
+        //print(schenkerXMLRequest(req))
         return schenkerXMLRequest(req)
     }
     ///// SCHENKERXMLREQUEST /////

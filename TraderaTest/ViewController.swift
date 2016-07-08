@@ -84,8 +84,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func schenker(sender: AnyObject) {
-        session.notifications.addObserver(self, selector: #selector(showSchenker), name: TraderaService.notifications.gotSchenker.rawValue, object: nil)
-        let _=TraderaService.URLConnection(message: session.service.schenker(), action: "\"http://privpakservices.schenker.nu/SearchCollectionPoint\"", session: session, url: TraderaService.schenkerURL)
+        //session.notifications.addObserver(self, selector: #selector(showSchenker), name: TraderaService.notifications.gotSchenker.rawValue, object: nil)
+        //let _=TraderaService.URLConnection(message: session.service.schenker(), action: "\"http://privpakservices.schenker.nu/SearchCollectionPoint\"", session: session, url: TraderaService.schenkerURL)
+        performSegueWithIdentifier("SchenkerSegue", sender: self)
     }
     func showSchenker(notification:NSNotification) {
         let res=notification.object
@@ -112,7 +113,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         case "SchenkerSegue":
             print("Växlar till Schenkersökning")
             let vc=segue.destinationViewController as! SchenkerViewController
-            vc.collectionpoint=sender as? [String:String]
+            //vc.collectionpoint=sender as? [String:String]
+            vc.session=session
         default: print("Okänd segue: \(segue.identifier)")
         }
     }
