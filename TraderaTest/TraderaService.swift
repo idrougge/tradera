@@ -129,12 +129,17 @@ extension Dictionary {
 // tolkar SOAP-data som hämtats av URLConnection.      //
 /////////////////////////////////////////////////////////
 class TraderaService {
-    static let appid=1589
-    static let servicekey="52227af6-11f2-4b9a-b321-0c6b97d24d76"
-    static let publickey="4e1c7c27-b028-4a34-a61e-0775030a24d1"
-    static let schenkerkey="3B-EC-BA-B2-3D-B5-DF-62-D9-1F-E0-65-B7-89-68-C4"
+    static let appid=Secrets.appid
+    static let servicekey=Secrets.servicekey
+    static let publickey=Secrets.publickey
+    static let schenkerkey=Secrets.schenkerkey
+    static var secretkey=NSUUID().UUIDString
+    static let path:NSString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+    static let loginFile:String=path.stringByAppendingPathComponent("login.plist")
     static let publicServiceURL="http://api.tradera.com/v3/PublicService.asmx"
     static let searchServiceURL="http://api.tradera.com/v3/searchservice.asmx"
+    static let restrictedServiceURL="http"
+    static let loginURL="http://api.tradera.com/tokenlogin.aspx?appId=\(appid)&pkey=\(publickey)&skey=\(secretkey)"
     static let schenkerURL="http://privpakservices.schenker.nu/package/package_1.3/packageservices.asmx"
     static let xmlns:String="\"http://api.tradera.com\""
     static var sandbox=true
@@ -147,6 +152,7 @@ class TraderaService {
         gotItem,
         didFinishSearching,
         gotCategories,
+        gotToken,
         gotSchenker
     }
     static let preamble="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
@@ -187,6 +193,20 @@ class TraderaService {
         req["soap:Body"]="<soap:GetCategories/>"
         return XMLRequest(req)
     }
+    /////////////////////////////////
+    func login() -> String {
+        return ""
+    }
+    
+    /////////////////////////////////
+    func fetchToken() -> String {
+        let opts=["userId":"idrougge","secretKey":TraderaService.secretkey]
+        let req=["soap:Body":["FetchToken xmlns=\"http://api.tradera.com\"":opts]]
+        let xml=XMLRequest(req)
+        print("XMLRequest=\(xml)")
+        return xml
+    }
+    
     ///// SEARCHCOLLECTIONPOINT /////
     func schenker() -> String {
         var req=[String:AnyObject]()
@@ -275,6 +295,9 @@ class TraderaService {
                 parser.delegate=delegate
             case "GetCategoriesResult":
                 delegate=categoriesParser(session: session, parent: self)
+                parser.delegate=delegate
+            case "FetchTokenResult":
+                delegate=tokenParser(session: session)
                 parser.delegate=delegate
             case "SearchCollectionPointResult":
                 delegate=schenkerParser(session: session, parent: self)
@@ -446,6 +469,19 @@ class TraderaService {
                     TraderaService.categories=categories
                     session.notifications.postNotificationName(TraderaService.notifications.gotCategories.rawValue, object: nil)
                     parser.delegate=parent
+                }
+            }
+        }
+        //////////// tokenParser ///////////
+        // Läser in inloggningsnyckel och //
+        // lägger in i TraderaSession.    //
+        ////////////////////////////////////
+        class tokenParser:XMLParser {
+            override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+                if elementName=="authToken" {
+                    print("Mottog authToken: \(currentElement)")
+                    session.token=currentElement
+                    session.notifications.postNotificationName(TraderaService.notifications.gotToken.rawValue, object: nil)
                 }
             }
         }

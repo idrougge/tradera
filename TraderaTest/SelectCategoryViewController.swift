@@ -32,7 +32,6 @@ class SelectCategoryViewController: UIViewController, UITableViewDelegate {
         print("\(NSString(string: #file).lastPathComponent).\(#function) didSelectRow: \(row)")
         tableView.reloadData()
         if tableViewDataSource.categories?[row].sub == nil {
-            //tableView.dequeueReusableCellWithIdentifier("CategoryCell", forIndexPath: indexPath).accessoryType = .Checkmark
             tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
         }
         tableViewDataSource.tableView(tableView, didSelectRowAtIndexPath: indexPath)

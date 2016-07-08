@@ -32,6 +32,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         session.notifications.addObserver(self, selector: #selector(showSearch), name: TraderaService.notifications.didFinishSearching.rawValue, object: nil)
         session.notifications.addObserver(self, selector: #selector(showTime), name: TraderaService.notifications.gotTime.rawValue, object: nil)
         session.notifications.addObserver(self, selector: #selector(reloadCategories), name: TraderaService.notifications.gotCategories.rawValue, object: nil)
+        
+        ///////////////////
+        session.service.fetchToken()
     }
 
     override func didReceiveMemoryWarning() {
