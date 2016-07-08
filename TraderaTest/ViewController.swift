@@ -57,7 +57,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func sendButton(sender: AnyObject) {
-        //let connection=TraderaService.URLConnection(message: service.getCategories(), action: "\"http://api.tradera.com/GetCategories\"", session: session, url: TraderaService.publicServiceURL)
         let _=TraderaService.URLConnection(message: session.service.search(resultField.text!), action: "\"http://api.tradera.com/Search\"", session: session, url: TraderaService.searchServiceURL)
         // Uppkopplingen är asynkron
     }
@@ -84,13 +83,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func schenker(sender: AnyObject) {
-        //session.notifications.addObserver(self, selector: #selector(showSchenker), name: TraderaService.notifications.gotSchenker.rawValue, object: nil)
-        //let _=TraderaService.URLConnection(message: session.service.schenker(), action: "\"http://privpakservices.schenker.nu/SearchCollectionPoint\"", session: session, url: TraderaService.schenkerURL)
         performSegueWithIdentifier("SchenkerSegue", sender: self)
-    }
-    func showSchenker(notification:NSNotification) {
-        let res=notification.object
-        performSegueWithIdentifier("SchenkerSegue", sender: res)
     }
     
     @IBAction func clearItems(sender: AnyObject) {
@@ -113,7 +106,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         case "SchenkerSegue":
             print("Växlar till Schenkersökning")
             let vc=segue.destinationViewController as! SchenkerViewController
-            //vc.collectionpoint=sender as? [String:String]
             vc.session=session
         default: print("Okänd segue: \(segue.identifier)")
         }
