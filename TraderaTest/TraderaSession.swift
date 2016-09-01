@@ -16,8 +16,10 @@ import Foundation
 
 class TraderaSession {
     let service=TraderaService()
-    var token:String?
+    static var token:String?
+    static var authid:Int?
     var time:String?
+    static var user:TraderaUser?
     var items=[TraderaItem]()
     let notifications=NSNotificationCenter()
 }

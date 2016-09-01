@@ -138,7 +138,7 @@ class TraderaService {
     static let loginFile:String=path.stringByAppendingPathComponent("login.plist")
     static let publicServiceURL="http://api.tradera.com/v3/PublicService.asmx"
     static let searchServiceURL="http://api.tradera.com/v3/searchservice.asmx"
-    static let restrictedServiceURL="http"
+    static let restrictedServiceURL="http://api.tradera.com/v3/restrictedservice.asmx"
     static let loginURL="http://api.tradera.com/tokenlogin.aspx?appId=\(appid)&pkey=\(publickey)&skey=\(secretkey)"
     static let schenkerURL="http://privpakservices.schenker.nu/package/package_1.3/packageservices.asmx"
     static let xmlns:String="\"http://api.tradera.com\""
@@ -153,10 +153,18 @@ class TraderaService {
         didFinishSearching,
         gotCategories,
         gotToken,
-        gotSchenker
+        gotSchenker,
+        gotUserByAlias,
+        gotUserInfo
     }
     static let preamble="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
     static let header=String(format:"\(preamble)    <soap:Header>    <AuthenticationHeader xmlns=\"http://api.tradera.com\">    <AppId>%d</AppId>    <AppKey>%@</AppKey>    </AuthenticationHeader>    <ConfigurationHeader xmlns=\"http://api.tradera.com\"></ConfigurationHeader>    </soap:Header>",appid,servicekey)
+    static var authheader:String { get {
+        guard let token=TraderaSession.token, id=TraderaSession.user?.id
+            else {return ""}
+        return String(format:"\(preamble)    <soap:Header>    <AuthenticationHeader xmlns=\"http://api.tradera.com\">    <AppId>%d</AppId>    <AppKey>%@</AppKey>    </AuthenticationHeader>    <AuthorizationHeader xmlns=\"http://api.tradera.com\">   <UserId>%d</UserId> <Token>%@</Token>    </AuthorizationHeader>   <ConfigurationHeader xmlns=\"http://api.tradera.com\"></ConfigurationHeader>    </soap:Header>",appid,servicekey,id,token)
+        }
+    }
     
     ///// INIT /////
     init(){
@@ -168,7 +176,6 @@ class TraderaService {
     func getOfficialTime() -> String {
         var req=[String:AnyObject]()
         req["soap:Body"]="<soap:GetOfficalTime/>"
-        //print("req=\(req)")
         return XMLRequest(req)
     }
     ///// SEARCH /////
@@ -198,12 +205,33 @@ class TraderaService {
         return ""
     }
     
-    /////////////////////////////////
+    ///// FETCHTOKEN /////
     func fetchToken() -> String {
-        let opts=["userId":"idrougge","secretKey":TraderaService.secretkey]
+        let opts=["userId":"\(TraderaSession.authid)","secretKey":TraderaService.secretkey]
         let req=["soap:Body":["FetchToken xmlns=\"http://api.tradera.com\"":opts]]
         let xml=XMLRequest(req)
-        print("XMLRequest=\(xml)")
+        //print("XMLRequest=\(xml)")
+        return xml
+    }
+    
+    ///// GETUSERBYALIAS /////
+    func getUserByAlias(username:String) -> String {
+        let opts=["alias":username]
+        let req=["soap:Body":["GetUserByAlias xmlns=\"http://api.tradera.com\"":opts]]
+        let xml=XMLRequest(req)
+        //print("XMLRequest=\(xml)")
+        return xml
+    }
+    
+    ///// GETUSERINFO /////
+    func getUserInfo(userid:Int) -> String {
+        //let token=TraderaSession.token
+        //let id=String(TraderaSession.user?.id)
+        //let auth=["UserId":id, "Token":token]
+        TraderaSession.authid=userid
+        let req=["soap:Body":"<GetUserInfo xmlns=\"http://api.tradera.com\" />"]
+        let xml=XMLRequest(req, header:TraderaService.authheader)
+        print(xml)
         return xml
     }
     
@@ -233,8 +261,9 @@ class TraderaService {
         return xml
     }
     ///// XMLREQUEST /////
-    func XMLRequest(dict:[String:AnyObject]) -> String {
-        var xml="\(TraderaService.header)"
+    func XMLRequest(dict:[String:AnyObject], header:String = TraderaService.header) -> String {
+        //var xml="\(TraderaService.header)"
+        var xml="\(header)"
         for (key,value) in dict {
             print("key=\(key)\nvalue=\(value)")
             xml+=XMLTree([key:value])
@@ -280,7 +309,7 @@ class TraderaService {
             self.delegate=self
         }
         func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-            //print("parser.didStartElement: \(elementName)")
+            //print("parser.didStartElement: \(elementName) = \(currentElement)")
             currentElementName=elementName
             currentElement=nil
             switch elementName {
@@ -296,8 +325,11 @@ class TraderaService {
             case "GetCategoriesResult":
                 delegate=categoriesParser(session: session, parent: self)
                 parser.delegate=delegate
-            case "FetchTokenResult":
+            case "FetchTokenResponse":
                 delegate=tokenParser(session: session)
+                parser.delegate=delegate
+            case "GetUserByAliasResult","GetUserInfoResult":
+                delegate=aliasParser(session: session, parent: self)
                 parser.delegate=delegate
             case "SearchCollectionPointResult":
                 delegate=schenkerParser(session: session, parent: self)
@@ -478,13 +510,42 @@ class TraderaService {
         ////////////////////////////////////
         class tokenParser:XMLParser {
             override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-                if elementName=="authToken" {
+                print("tokenParser: \(elementName)=\(currentElement)")
+                if elementName=="AuthToken" {
                     print("Mottog authToken: \(currentElement)")
-                    session.token=currentElement
+                    //session.token=currentElement
+                    TraderaSession.token=currentElement
                     session.notifications.postNotificationName(TraderaService.notifications.gotToken.rawValue, object: nil)
                 }
             }
         }
+        //////////// aliasParser ///////////
+        // Hämtar användarid (en int)     //
+        // baserat på användarens alias.  //
+        ////////////////////////////////////
+        class aliasParser:XMLParser {
+            let parent:XMLParser?
+            var user=[String:String]()
+            
+            init(session:TraderaSession, parent:XMLParser) {
+                self.parent=parent
+                super.init(session: session)
+            }
+            //// didEndElement ////
+            override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+                print("aliasParser: \(elementName)=\(currentElement)")
+                user[elementName]=currentElement
+                if elementName == "GetUserByAliasResult" {
+                    print("Slut på GetUserByAliasResult")
+                    session.notifications.postNotificationName(TraderaService.notifications.gotUserByAlias.rawValue, object: TraderaUser(fromDict: user))
+                }
+                if elementName == "GetUserInfoResult" {
+                    print("Slut på GetUserInfoResult")
+                    session.notifications.postNotificationName(TraderaService.notifications.gotUserInfo.rawValue, object: TraderaUser(fromDict: user))
+                }
+            }
+        }
+        
         ///////// schenkerParser /////////////
         // Läser in närmaste Schenkerombud. //
         //////////////////////////////////////

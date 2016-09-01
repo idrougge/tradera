@@ -107,6 +107,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             print("Växlar till Schenkersökning")
             let vc=segue.destinationViewController as! SchenkerViewController
             vc.session=session
+        case "LoginSegue1":
+            print("Växlar till inloggning")
+            let vc=segue.destinationViewController as! LoginViewController
+            vc.session=session
         default: print("Okänd segue: \(segue.identifier)")
         }
     }

@@ -113,7 +113,7 @@
                                 <rect key="frame" x="521" y="72" width="59" height="30"/>
                                 <state key="normal" title="Logga in"/>
                                 <connections>
-                                    <segue destination="b6Y-dQ-xCq" kind="show" identifier="LoginSegue" id="qMu-WY-dd3"/>
+                                    <segue destination="Bkx-g6-crl" kind="show" identifier="LoginSegue1" id="RIS-ve-veF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -155,9 +155,66 @@
             <point key="canvasLocation" x="1089" y="251"/>
         </scene>
         <!--Login View Controller-->
+        <scene sceneID="MhF-hV-nut">
+            <objects>
+                <viewController id="Bkx-g6-crl" customClass="LoginViewController" customModule="TraderaTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BY9-lB-5yS"/>
+                        <viewControllerLayoutGuide type="bottom" id="IuK-gX-yEn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WAl-H8-rW9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZL-sH-Fvk">
+                                <rect key="frame" x="20" y="72" width="560" height="61"/>
+                                <string key="text">Ange ditt användarnamn i rutan nedan.
+Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta din identitet.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZb-eI-bGp">
+                                <rect key="frame" x="20" y="179" width="560" height="30"/>
+                                <state key="normal" title="Logga in"/>
+                                <connections>
+                                    <action selector="didPressButton:" destination="Bkx-g6-crl" eventType="touchUpInside" id="ZD7-If-A5c"/>
+                                    <segue destination="b6Y-dQ-xCq" kind="show" identifier="LoginSegue2" id="A73-m8-Iri"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="idrougge" borderStyle="roundedRect" placeholder="användarnamn" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R8d-xJ-Z1i">
+                                <rect key="frame" x="20" y="141" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="R8d-xJ-Z1i" firstAttribute="top" secondItem="fZL-sH-Fvk" secondAttribute="bottom" constant="8" id="DZ0-Sw-8vt"/>
+                            <constraint firstItem="R8d-xJ-Z1i" firstAttribute="leading" secondItem="fZL-sH-Fvk" secondAttribute="leading" id="EtZ-cF-W63"/>
+                            <constraint firstItem="fZL-sH-Fvk" firstAttribute="top" secondItem="BY9-lB-5yS" secondAttribute="bottom" constant="8" id="Udw-fG-WMM"/>
+                            <constraint firstItem="UZb-eI-bGp" firstAttribute="top" secondItem="R8d-xJ-Z1i" secondAttribute="bottom" constant="8" id="VhR-hB-syZ"/>
+                            <constraint firstItem="R8d-xJ-Z1i" firstAttribute="trailing" secondItem="UZb-eI-bGp" secondAttribute="trailing" id="f1H-fB-eIQ"/>
+                            <constraint firstItem="R8d-xJ-Z1i" firstAttribute="trailing" secondItem="fZL-sH-Fvk" secondAttribute="trailing" id="oig-1I-fa1"/>
+                            <constraint firstItem="fZL-sH-Fvk" firstAttribute="leading" secondItem="WAl-H8-rW9" secondAttribute="leadingMargin" id="qW4-qQ-eGG"/>
+                            <constraint firstItem="R8d-xJ-Z1i" firstAttribute="leading" secondItem="UZb-eI-bGp" secondAttribute="leading" id="uBf-C2-87f"/>
+                            <constraint firstItem="fZL-sH-Fvk" firstAttribute="trailing" secondItem="WAl-H8-rW9" secondAttribute="trailingMargin" id="wvi-EQ-Nrt"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="UZb-eI-bGp" id="uvf-a1-iTi"/>
+                        <outlet property="label" destination="fZL-sH-Fvk" id="tmK-QQ-e1X"/>
+                        <outlet property="textfield" destination="R8d-xJ-Z1i" id="SEn-Pt-Ua5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6US-UF-1OF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1081" y="-1822"/>
+        </scene>
+        <!--Bekräfta din identitet-->
         <scene sceneID="K6S-mv-g0f">
             <objects>
-                <viewController id="b6Y-dQ-xCq" customClass="LoginViewController" customModule="TraderaTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="b6Y-dQ-xCq" customClass="WebLoginViewController" customModule="TraderaTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5SN-ib-cQZ"/>
                         <viewControllerLayoutGuide type="bottom" id="7AU-DZ-VUG"/>
@@ -166,26 +223,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5St-0H-o48">
+                            <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5St-0H-o48">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="5St-0H-o48" firstAttribute="top" secondItem="77R-xi-vYQ" secondAttribute="topMargin" id="0r8-3h-uxm"/>
+                            <constraint firstItem="5St-0H-o48" firstAttribute="top" secondItem="5SN-ib-cQZ" secondAttribute="bottom" constant="8" id="9Pi-PB-P6y"/>
                             <constraint firstItem="5St-0H-o48" firstAttribute="leading" secondItem="77R-xi-vYQ" secondAttribute="leading" id="D9j-x4-tAJ"/>
                             <constraint firstItem="5St-0H-o48" firstAttribute="bottom" secondItem="7AU-DZ-VUG" secondAttribute="top" id="HQn-bm-t8r"/>
                             <constraint firstItem="5St-0H-o48" firstAttribute="top" secondItem="77R-xi-vYQ" secondAttribute="top" id="ROe-s2-2Fd"/>
                             <constraint firstAttribute="trailing" secondItem="5St-0H-o48" secondAttribute="trailing" id="cLr-6d-VGh"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9Pi-PB-P6y"/>
+                                <exclude reference="ROe-s2-2Fd"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Bekräfta din identitet" id="VqU-fg-WcJ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="C2f-c6-fwk">
+                            <connections>
+                                <action selector="done:" destination="b6Y-dQ-xCq" id="eP1-mf-z9v"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="5St-0H-o48" id="wdv-02-Pzw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XCy-a0-XrK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1096" y="-725"/>
+            <point key="canvasLocation" x="1777" y="-1822"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="9eR-E0-rIm">
