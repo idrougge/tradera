@@ -23,6 +23,7 @@
 		DCA0BE631CFB96B6008DFCF2 /* SchenkerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA0BE621CFB96B6008DFCF2 /* SchenkerViewController.swift */; };
 		DCBFB57A1D74788700B2CAC3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB5791D74788700B2CAC3 /* LoginViewController.swift */; };
 		DCBFB57C1D75C3D200B2CAC3 /* TraderaUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB57B1D75C3D200B2CAC3 /* TraderaUser.swift */; };
+		DCBFB57E1D78816A00B2CAC3 /* NewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB57D1D78816A00B2CAC3 /* NewItem.swift */; };
 		DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */; };
 		DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8071CE9F8590096D5C9 /* ViewController.swift */; };
 		DCE7B80B1CE9F8590096D5C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B8091CE9F8590096D5C9 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		DCA0BE621CFB96B6008DFCF2 /* SchenkerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchenkerViewController.swift; sourceTree = "<group>"; };
 		DCBFB5791D74788700B2CAC3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DCBFB57B1D75C3D200B2CAC3 /* TraderaUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaUser.swift; sourceTree = "<group>"; };
+		DCBFB57D1D78816A00B2CAC3 /* NewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewItem.swift; path = TraderaTest/NewItem.swift; sourceTree = "<group>"; };
 		DCE7B8021CE9F8590096D5C9 /* TraderaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraderaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCE7B8071CE9F8590096D5C9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 		DCE7B7F91CE9F8590096D5C9 = {
 			isa = PBXGroup;
 			children = (
+				DCBFB57D1D78816A00B2CAC3 /* NewItem.swift */,
 				DCE7B8041CE9F8590096D5C9 /* TraderaTest */,
 				DCE7B8031CE9F8590096D5C9 /* Products */,
 			);
@@ -192,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCBFB57A1D74788700B2CAC3 /* LoginViewController.swift in Sources */,
+				DCBFB57E1D78816A00B2CAC3 /* NewItem.swift in Sources */,
 				DC22FECE1CEE18E600921E68 /* TraderaSearchTableViewCell.swift in Sources */,
 				DC3862291CF7114200E6D2CB /* TraderaCategoryTableViewCell.swift in Sources */,
 				DC3862331CFB59E200E6D2CB /* SelectCategoryViewController.swift in Sources */,

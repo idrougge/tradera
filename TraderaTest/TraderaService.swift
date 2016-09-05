@@ -200,9 +200,12 @@ class TraderaService {
         req["soap:Body"]="<soap:GetCategories/>"
         return XMLRequest(req)
     }
-    /////////////////////////////////
-    func login() -> String {
-        return ""
+    ///// GETITEMFIELDVALUES /////
+    func getItemFieldValues() -> String {
+        let req=["soap:Body":"<GetItemFieldValues xmlns=\"http://api.tradera.com\" />"]
+        let xml=XMLRequest(req)
+        print(xml)
+        return xml
     }
     
     ///// FETCHTOKEN /////
@@ -333,6 +336,9 @@ class TraderaService {
                 parser.delegate=delegate
             case "SearchCollectionPointResult":
                 delegate=schenkerParser(session: session, parent: self)
+                parser.delegate=delegate
+            case "GetItemFieldValuesResult":
+                delegate=itemFieldValuesParser(session: session, parent: self)
                 parser.delegate=delegate
             default:
                 //print("Hoppar över element: \(elementName)")
@@ -543,6 +549,50 @@ class TraderaService {
                     print("Slut på GetUserInfoResult")
                     session.notifications.postNotificationName(TraderaService.notifications.gotUserInfo.rawValue, object: TraderaUser(fromDict: user))
                 }
+            }
+        }
+        //////////// itemFieldValuesParser ////////////
+        // Läser in betalnings- och fraktalternativ. //
+        ///////////////////////////////////////////////
+        class itemFieldValuesParser:XMLParser {
+            let parent:XMLParser?
+            var results=[String:[[String:String]]]()
+            var path:String=""
+            var item:[String:String]?
+            
+            init(session: TraderaSession, parent:XMLParser) {
+                self.parent=parent
+                super.init(session: session)
+            }
+            //// didStartElement ////
+            override func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+                if path == "" {
+                    path=elementName
+                    //print("path=\(path)")
+                    item=[String:String]()
+                    currentElement=nil
+                }
+            }
+            //// didEndElement ////
+            override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+                print("itemFieldValuesParser.didEndElement: \(elementName) = \(currentElement)")
+                print("path=\(path)")
+                switch elementName {
+                case path:
+                    //print("Lägger till objekt på sökväg \(path):")
+                    //print(item)
+                    if results[path]==nil {results[path]=[[String:String]]()}
+                    results[path]?.append(item!)
+                    path=""
+                    item=nil
+                case "GetItemFieldValuesResult":
+                    print("*** Slut på GetItemFieldValuesResult ***")
+                    print(results)
+                    delegate=parent
+                default:
+                    item?[elementName]=currentElement
+                }
+                currentElement=nil
             }
         }
         

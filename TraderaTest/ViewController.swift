@@ -34,7 +34,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         session.notifications.addObserver(self, selector: #selector(reloadCategories), name: TraderaService.notifications.gotCategories.rawValue, object: nil)
         
         ///////////////////
-        session.service.fetchToken()
+        session.service.fetchToken()    // Kanske inte funkar; flödet behöver tänkas igenom
+        
+        ///////////////////
+        let _=TraderaService.URLConnection(message: session.service.getItemFieldValues(), action: "\"http://api.tradera.com/GetItemFieldValues\"", session: session, url: TraderaService.publicServiceURL)
     }
 
     override func didReceiveMemoryWarning() {
