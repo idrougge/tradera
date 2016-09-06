@@ -24,6 +24,8 @@
 		DCBFB57A1D74788700B2CAC3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB5791D74788700B2CAC3 /* LoginViewController.swift */; };
 		DCBFB57C1D75C3D200B2CAC3 /* TraderaUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB57B1D75C3D200B2CAC3 /* TraderaUser.swift */; };
 		DCBFB57E1D78816A00B2CAC3 /* NewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB57D1D78816A00B2CAC3 /* NewItem.swift */; };
+		DCBFB5801D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB57F1D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift */; };
+		DCBFB5821D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB5811D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift */; };
 		DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */; };
 		DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8071CE9F8590096D5C9 /* ViewController.swift */; };
 		DCE7B80B1CE9F8590096D5C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B8091CE9F8590096D5C9 /* Main.storyboard */; };
@@ -51,6 +53,8 @@
 		DCBFB5791D74788700B2CAC3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DCBFB57B1D75C3D200B2CAC3 /* TraderaUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraderaUser.swift; sourceTree = "<group>"; };
 		DCBFB57D1D78816A00B2CAC3 /* NewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewItem.swift; path = TraderaTest/NewItem.swift; sourceTree = "<group>"; };
+		DCBFB57F1D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPaymentShippingViewController.swift; sourceTree = "<group>"; };
+		DCBFB5811D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPaymentShippingTableViewCell.swift; sourceTree = "<group>"; };
 		DCE7B8021CE9F8590096D5C9 /* TraderaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraderaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCE7B8071CE9F8590096D5C9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,9 +110,11 @@
 				DC3862341CFB68BB00E6D2CB /* CategoryTableViewCell.xib */,
 				DCA0BE621CFB96B6008DFCF2 /* SchenkerViewController.swift */,
 				DC3862241CF5F2F400E6D2CB /* CategoryTableViewDataSource.swift */,
+				DCBFB5811D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift */,
 				DC38622E1CFB597600E6D2CB /* CreateAuctionViewController.swift */,
 				DC3862301CFB59B300E6D2CB /* SelectTimeViewController.swift */,
 				DC3862321CFB59E200E6D2CB /* SelectCategoryViewController.swift */,
+				DCBFB57F1D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift */,
 				DC3862281CF7114200E6D2CB /* TraderaCategoryTableViewCell.swift */,
 				DC1AF0041CF0A675008AB27F /* TraderaItemViewController.swift */,
 				DC22FECD1CEE18E600921E68 /* TraderaSearchTableViewCell.swift */,
@@ -210,10 +216,12 @@
 				DC38622F1CFB597600E6D2CB /* CreateAuctionViewController.swift in Sources */,
 				DC22FED41CEF68ED00921E68 /* TraderaSession.swift in Sources */,
 				DC22FED01CEE205600921E68 /* TraderaSearchTableViewController.swift in Sources */,
+				DCBFB5821D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift in Sources */,
 				DC46E5E51D12D27B0034D8D2 /* WebLoginViewController.swift in Sources */,
 				DCE7B81C1CECC6C90096D5C9 /* TraderaItem.swift in Sources */,
 				DC38622B1CF86DA800E6D2CB /* Types.swift in Sources */,
 				DCE7B8181CEC7C190096D5C9 /* TraderaService.swift in Sources */,
+				DCBFB5801D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

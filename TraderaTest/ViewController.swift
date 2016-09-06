@@ -114,6 +114,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             print("Växlar till inloggning")
             let vc=segue.destinationViewController as! LoginViewController
             vc.session=session
+        case "CreateAuctionSegue":
+            print("Växlar till \(segue.identifier)")
+            let vc=segue.destinationViewController as! CreateAuctionViewController
+            vc.session=session
         default: print("Okänd segue: \(segue.identifier)")
         }
     }

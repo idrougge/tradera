@@ -155,7 +155,8 @@ class TraderaService {
         gotToken,
         gotSchenker,
         gotUserByAlias,
-        gotUserInfo
+        gotUserInfo,
+        gotItemFieldValues
     }
     static let preamble="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
     static let header=String(format:"\(preamble)    <soap:Header>    <AuthenticationHeader xmlns=\"http://api.tradera.com\">    <AppId>%d</AppId>    <AppKey>%@</AppKey>    </AuthenticationHeader>    <ConfigurationHeader xmlns=\"http://api.tradera.com\"></ConfigurationHeader>    </soap:Header>",appid,servicekey)
@@ -588,6 +589,7 @@ class TraderaService {
                 case "GetItemFieldValuesResult":
                     print("*** Slut på GetItemFieldValuesResult ***")
                     print(results)
+                    session.notifications.postNotificationName(TraderaService.notifications.gotItemFieldValues.rawValue, object: results)
                     delegate=parent
                 default:
                     item?[elementName]=currentElement

@@ -23,6 +23,8 @@ class SelectTimeViewController: UIViewController {
         //dateformatter.dateStyle = .MediumStyle
         //dateformatter.timeStyle = .ShortStyle
         dateformatter.dateFormat="EEEE d MMM 'kl' H:mm"
+        startingDatePicker.minimumDate=NSDate()//.dateByAddingTimeInterval(2)
+        startingDatePicker.date=NSDate(timeIntervalSinceNow: 7*24*60*60)
         guard let startingTime=parent?.startingTime, endingTime=parent?.endingTime else {
             print("Ingen giltig tid i moderkontrollern!")
             return

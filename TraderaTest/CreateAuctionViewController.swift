@@ -19,6 +19,7 @@ class CreateAuctionViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var buyNowTextField: UITextField!
 
     ///// IVARS /////
+    var session:TraderaSession!
     var item=[String:String]()
     var startingTime:NSDate?
     var endingTime:NSDate?
@@ -33,6 +34,8 @@ class CreateAuctionViewController: UIViewController, UITextFieldDelegate {
         let tapToHideKeyboard=UITapGestureRecognizer(target: self, action: #selector(textFieldShouldEndEditing))
         view.addGestureRecognizer(tapToHideKeyboard)
         self.navigationController?.title="Hej"
+        let datepicker=UIDatePicker()
+        startingBidTextField.inputView=datepicker
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,6 +52,10 @@ class CreateAuctionViewController: UIViewController, UITextFieldDelegate {
         case "SelectCategorySegue":
             let vc=segue.destinationViewController as! SelectCategoryViewController
             vc.parent=self
+        case "SelectShippingTypesSegue", "SelectPaymentTypesSegue":
+            print("Växlar till val av betalnings- och fraktalternativ")
+            let vc=segue.destinationViewController as! SelectPaymentShippingViewController
+            vc.session=session
         default:
             print("Okänd segue!")
         }

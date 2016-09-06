@@ -467,6 +467,32 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                                     <action selector="buyNowEditingDidEnd:" destination="Yc2-d6-Z4r" eventType="editingDidEnd" id="yU9-dB-rSc"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xD0-1w-GaB">
+                                <rect key="frame" x="476" y="344" width="104" height="30"/>
+                                <state key="normal" title="Välj fraktmetod"/>
+                                <connections>
+                                    <segue destination="62B-TP-LJR" kind="show" identifier="SelectShippingTypesSegue" id="UhF-ov-W38"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMj-4B-Sib">
+                                <rect key="frame" x="454" y="382" width="126" height="30"/>
+                                <state key="normal" title="Välj betalningssätt"/>
+                                <connections>
+                                    <segue destination="62B-TP-LJR" kind="show" identifier="SelectPaymentTypesSegue" id="h1n-EZ-Qeb"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frakt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRN-1O-baz">
+                                <rect key="frame" x="428" y="344" width="40" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Betalning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G45-Gz-d8p">
+                                <rect key="frame" x="374" y="382" width="72" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -478,9 +504,13 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                             <constraint firstItem="fU4-bj-JfA" firstAttribute="top" secondItem="ulO-ab-ETd" secondAttribute="top" id="EId-ST-aFY"/>
                             <constraint firstItem="0YD-qe-Ek7" firstAttribute="top" secondItem="CUv-0N-uH2" secondAttribute="top" id="FpA-jk-eRE"/>
                             <constraint firstItem="fU4-bj-JfA" firstAttribute="top" secondItem="oMF-tR-pe9" secondAttribute="bottom" constant="8" symbolic="YES" id="GEb-ll-vfa"/>
+                            <constraint firstItem="xD0-1w-GaB" firstAttribute="trailing" secondItem="CMj-4B-Sib" secondAttribute="trailing" id="GjU-om-y12"/>
+                            <constraint firstItem="sRN-1O-baz" firstAttribute="baseline" secondItem="fU4-bj-JfA" secondAttribute="baseline" id="HgS-pU-2qF"/>
+                            <constraint firstItem="CMj-4B-Sib" firstAttribute="leading" secondItem="G45-Gz-d8p" secondAttribute="trailing" constant="8" symbolic="YES" id="NcD-9c-2Mp"/>
                             <constraint firstItem="c77-Tz-oRT" firstAttribute="centerY" secondItem="kUs-5v-G8T" secondAttribute="centerY" id="R2n-6Q-8Hh"/>
                             <constraint firstItem="MqT-MS-aPp" firstAttribute="leading" secondItem="WeC-i4-AOZ" secondAttribute="trailing" constant="18" id="TKw-MH-x0I"/>
                             <constraint firstAttribute="bottom" secondItem="eBu-mr-cZV" secondAttribute="bottom" constant="20" symbolic="YES" id="Whc-FM-K1S"/>
+                            <constraint firstItem="CMj-4B-Sib" firstAttribute="baseline" secondItem="CUv-0N-uH2" secondAttribute="baseline" id="XcJ-4I-1KQ"/>
                             <constraint firstItem="CFe-Ey-kmm" firstAttribute="trailing" secondItem="ciz-TO-pX7" secondAttribute="trailingMargin" id="ZP6-zj-huS"/>
                             <constraint firstItem="V2f-zi-YuE" firstAttribute="leading" secondItem="ciz-TO-pX7" secondAttribute="leadingMargin" id="ZPB-68-XdL"/>
                             <constraint firstItem="Nih-dm-4t5" firstAttribute="centerY" secondItem="8my-nP-dVg" secondAttribute="centerY" id="cJX-5O-dvK"/>
@@ -491,7 +521,9 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                             <constraint firstItem="0YD-qe-Ek7" firstAttribute="leading" secondItem="WeC-i4-AOZ" secondAttribute="leading" id="fxM-p7-PvZ"/>
                             <constraint firstItem="CUv-0N-uH2" firstAttribute="leading" secondItem="MqT-MS-aPp" secondAttribute="leading" id="gls-Sj-bNc"/>
                             <constraint firstItem="ulO-ab-ETd" firstAttribute="leading" secondItem="CUv-0N-uH2" secondAttribute="leading" id="jtn-bm-loY"/>
+                            <constraint firstItem="xD0-1w-GaB" firstAttribute="leading" secondItem="sRN-1O-baz" secondAttribute="trailing" constant="8" symbolic="YES" id="kj7-6K-xeC"/>
                             <constraint firstItem="V2f-zi-YuE" firstAttribute="top" secondItem="N93-fI-qxd" secondAttribute="bottom" constant="8" symbolic="YES" id="l0L-0i-z3i"/>
+                            <constraint firstItem="G45-Gz-d8p" firstAttribute="baseline" secondItem="0YD-qe-Ek7" secondAttribute="baseline" id="ms3-ho-eO3"/>
                             <constraint firstItem="cn8-ek-J4r" firstAttribute="leading" secondItem="oMF-tR-pe9" secondAttribute="leading" id="nC1-ov-zYZ"/>
                             <constraint firstItem="8my-nP-dVg" firstAttribute="trailing" secondItem="kUs-5v-G8T" secondAttribute="trailing" id="nIN-k1-etN"/>
                             <constraint firstItem="MqT-MS-aPp" firstAttribute="leading" secondItem="kUs-5v-G8T" secondAttribute="leading" id="naa-EC-j3c"/>
@@ -500,8 +532,10 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                             <constraint firstItem="fU4-bj-JfA" firstAttribute="leading" secondItem="0YD-qe-Ek7" secondAttribute="leading" id="pma-zG-BRY"/>
                             <constraint firstItem="oMF-tR-pe9" firstAttribute="leading" secondItem="fU4-bj-JfA" secondAttribute="leading" id="qRY-WZ-Qzg"/>
                             <constraint firstItem="8my-nP-dVg" firstAttribute="top" secondItem="kUs-5v-G8T" secondAttribute="bottom" constant="7" id="qec-yU-noR"/>
+                            <constraint firstItem="xD0-1w-GaB" firstAttribute="trailing" secondItem="oMF-tR-pe9" secondAttribute="trailing" id="rML-As-HRr"/>
                             <constraint firstItem="CUv-0N-uH2" firstAttribute="top" secondItem="ulO-ab-ETd" secondAttribute="bottom" constant="8" symbolic="YES" id="ray-rM-Z2Q"/>
                             <constraint firstItem="WeC-i4-AOZ" firstAttribute="leading" secondItem="c77-Tz-oRT" secondAttribute="leading" id="sZQ-13-Zy7"/>
+                            <constraint firstItem="xD0-1w-GaB" firstAttribute="baseline" secondItem="ulO-ab-ETd" secondAttribute="baseline" id="swn-2k-ZMH"/>
                             <constraint firstItem="kUs-5v-G8T" firstAttribute="top" secondItem="MqT-MS-aPp" secondAttribute="bottom" constant="4" id="tYi-PX-lHa"/>
                             <constraint firstItem="MqT-MS-aPp" firstAttribute="top" secondItem="CUv-0N-uH2" secondAttribute="bottom" constant="8" symbolic="YES" id="xZF-Q9-yuh"/>
                         </constraints>
@@ -521,6 +555,65 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IsE-c4-pzS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1089" y="1021"/>
+        </scene>
+        <!--Select Payment Shipping View Controller-->
+        <scene sceneID="clb-eL-JT7">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="62B-TP-LJR" customClass="SelectPaymentShippingViewController" customModule="TraderaTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="41c-w3-Y7R"/>
+                        <viewControllerLayoutGuide type="bottom" id="b03-5l-MFs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="F8c-cm-zFy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="hy9-gt-7Nk">
+                                <rect key="frame" x="20" y="72" width="560" height="508"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PaymentShippingCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="PaymentShippingCell" id="KSP-7S-6jo" customClass="SelectPaymentShippingTableViewCell" customModule="TraderaTest" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="560" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KSP-7S-6jo" id="gIs-Bt-pLo">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCq-Uq-4xW">
+                                                    <rect key="frame" x="8" y="8" width="544" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="wCq-Uq-4xW" firstAttribute="trailing" secondItem="gIs-Bt-pLo" secondAttribute="trailingMargin" id="7yS-7t-vAP"/>
+                                                <constraint firstItem="wCq-Uq-4xW" firstAttribute="top" secondItem="gIs-Bt-pLo" secondAttribute="topMargin" id="Ol0-y4-Kyt"/>
+                                                <constraint firstItem="wCq-Uq-4xW" firstAttribute="leading" secondItem="gIs-Bt-pLo" secondAttribute="leadingMargin" id="uPg-1y-8a1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="shitLabel" destination="wCq-Uq-4xW" id="0PW-Xq-hO4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hy9-gt-7Nk" firstAttribute="top" secondItem="41c-w3-Y7R" secondAttribute="bottom" constant="8" symbolic="YES" id="E5i-fu-qeb"/>
+                            <constraint firstItem="hy9-gt-7Nk" firstAttribute="leading" secondItem="F8c-cm-zFy" secondAttribute="leadingMargin" id="i8z-EP-q7c"/>
+                            <constraint firstItem="hy9-gt-7Nk" firstAttribute="trailing" secondItem="F8c-cm-zFy" secondAttribute="trailingMargin" id="liu-o5-tiA"/>
+                            <constraint firstAttribute="bottom" secondItem="hy9-gt-7Nk" secondAttribute="bottom" constant="20" symbolic="YES" id="zaL-Pr-IkR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="hy9-gt-7Nk" id="rxu-da-eVW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sMv-xl-o8S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1113" y="1791"/>
         </scene>
         <!--Välj kategori-->
         <scene sceneID="y8G-iD-oJ0">
@@ -949,5 +1042,6 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="hXB-0I-fx5"/>
+        <segue reference="h1n-EZ-Qeb"/>
     </inferredMetricsTieBreakers>
 </document>
