@@ -366,6 +366,11 @@ class TraderaService {
             case "AddItemResponse":
                 delegate=addItemParser(session: session, parent: self)
                 parser.delegate=delegate
+            case "soap:Fault":
+                print("*** SOAP-fel! ***")
+                errors+=1
+                delegate=errorParser(session: session)
+                parser.delegate=delegate
             default:
                 //print("Hoppar över element: \(elementName)")
                 break
@@ -382,6 +387,25 @@ class TraderaService {
             print("Parsningsfel!")
             errors+=1
         }
+        
+        //////////// timeParser ////////////
+        // Läser in tiden och konverterar //
+        // till NSDate i TraderaSession.  //
+        ////////////////////////////////////
+        class errorParser:XMLParser {
+            override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+                switch elementName {
+                case "faultcode":
+                    print("Felkod: \(currentElement)")
+                case "faultstring":
+                    print("Felbeskrivning: \(currentElement)")
+                default:
+                    print("Övrigt meddelande: \(elementName) = \(currentElement)")
+                }
+                currentElement=nil
+            }
+        }
+
         //////////// timeParser ////////////
         // Läser in tiden och konverterar //
         // till NSDate i TraderaSession.  //
