@@ -8,10 +8,11 @@
 
 import UIKit
 
-class SelectPaymentShippingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SelectPaymentShippingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
+    var parent:CreateAuctionViewController!
     var session:TraderaSession!
     var itemFieldValues:[String:[[String:String]]]?
     let optionTypes=["ItemAttributes","ShippingTypes","PaymentTypes"]
@@ -22,13 +23,20 @@ class SelectPaymentShippingViewController: UIViewController, UITableViewDelegate
         // Do any additional setup after loading the view.
         tableView.dataSource=self
         tableView.delegate=self
-        session.notifications.addObserver(self, selector: #selector(didReceiveItemFieldValues), name: TraderaService.notifications.gotItemFieldValues.rawValue, object: nil)
-        let _=TraderaService.URLConnection(message: session.service.getItemFieldValues(), action: "\"http://api.tradera.com/GetItemFieldValues\"", session: session, url: TraderaService.publicServiceURL)
+        if itemFieldValues==nil {
+            session.notifications.addObserver(self, selector: #selector(didReceiveItemFieldValues), name: TraderaService.notifications.gotItemFieldValues.rawValue, object: nil)
+            let _=TraderaService.URLConnection(message: session.service.getItemFieldValues(), action: "\"http://api.tradera.com/GetItemFieldValues\"", session: session, url: TraderaService.publicServiceURL)
+        }
+        navigationController?.delegate=self // Kan nog tas bort
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+        print("navigationController(\(navigationController), willShowViewController: \(viewController), animated: \(animated))")
     }
     
     func didReceiveItemFieldValues(notification:NSNotification) {
@@ -41,6 +49,8 @@ class SelectPaymentShippingViewController: UIViewController, UITableViewDelegate
         print(itemFieldValues)
         self.itemFieldValues=itemFieldValues
         tableView.reloadData()
+        //session.notifications.removeObserver(self, name: TraderaService.notifications.gotItemFieldValues.rawValue, object: nil)
+        session.notifications.removeObserver(self)
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -98,5 +108,35 @@ class SelectPaymentShippingViewController: UIViewController, UITableViewDelegate
         // Pass the selected object to the new view controller.
     }
     */
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        print("willMoveToParentViewController(parent: \(parent))")
+        super.willMoveToParentViewController(parent)
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        // Lägg in valen i CreateAuctionViewController
+        guard let selectedRows=tableView.indexPathsForSelectedRows
+            else {
+                super.viewWillDisappear(animated)
+                return
+        }
+        var choices=[String:[String]]()
+        for key in optionTypes {
+            choices[key]=[String]()
+        }
+        for indexPath in selectedRows {
+            let row=indexPath.row, section=indexPath.section
+            let sectionName=optionNames[section]
+            let sectionKey=optionTypes[section]
+            let rowName=itemFieldValues?[sectionKey]?[row]["Description"]
+            let rowId=itemFieldValues?[sectionKey]?[row]["Id"]
+            print("Vald rad: \(indexPath.row). \(rowName) (sektion \(indexPath.section). \(sectionName))")
+            choices[sectionKey]!.append(rowId!)
+        }
+        print("choices = \(choices)")
+        parent.itemFieldValues=choices
+        super.viewWillDisappear(animated)
+    }
 
 }

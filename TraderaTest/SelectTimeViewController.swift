@@ -45,8 +45,8 @@ class SelectTimeViewController: UIViewController {
         let endingTime=dateformatter.stringFromDate(endingDatePicker.date)
         parent?.startingTimeButton.setTitle(startingTime, forState: UIControlState.Normal)
         parent?.endingTimeButton.setTitle(endingTime, forState: UIControlState.Normal)
-        parent?.item["startingTime"]=startingDatePicker.date.description
-        parent?.item["endingTime"]=endingDatePicker.date.description
+        //parent?.item["startingTime"]=startingDatePicker.date.description
+        //parent?.item["endingTime"]=endingDatePicker.date.description
         parent?.startingTime=startingDatePicker.date
         parent?.endingTime=endingDatePicker.date
     }

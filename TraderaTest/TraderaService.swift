@@ -156,7 +156,8 @@ class TraderaService {
         gotSchenker,
         gotUserByAlias,
         gotUserInfo,
-        gotItemFieldValues
+        gotItemFieldValues,
+        gotAddItemResult
     }
     static let preamble="<?xml version=\"1.0\" encoding=\"utf-8\"?>        <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
     static let header=String(format:"\(preamble)    <soap:Header>    <AuthenticationHeader xmlns=\"http://api.tradera.com\">    <AppId>%d</AppId>    <AppKey>%@</AppKey>    </AuthenticationHeader>    <ConfigurationHeader xmlns=\"http://api.tradera.com\"></ConfigurationHeader>    </soap:Header>",appid,servicekey)
@@ -238,6 +239,13 @@ class TraderaService {
         print(xml)
         return xml
     }
+    ///// ITEMREQUEST /////
+    func itemRequest(auction:[String:AnyObject]) -> String {
+        let opts=["itemRequest":auction]
+        let req=["soap:Body":["AddItem xmlns=\"http://api.tradera.com\"":opts]]
+        let xml=XMLRequest(req, header: TraderaService.authheader)
+        return xml
+    }
     
     ///// SEARCHCOLLECTIONPOINT /////
     func schenker(postcode:String) -> String {
@@ -282,12 +290,26 @@ class TraderaService {
         for (key,value) in dict {
             switch value {
             case let element as String:
+                //print("element as String: \(key) = \(value)")
+                let tag="<\(key)>\(element)</\(key)>\n"
+                text+=tag
+            case let element as Int:
+                //print("element as Int: \(key) = \(value)")
                 let tag="<\(key)>\(element)</\(key)>\n"
                 text+=tag
             case let element as [String:AnyObject]:
-                text+="<\(key)>\(XMLTree(element))</\(key.componentsSeparatedByString(" ")[0])>"
+                //print("element as [String:AnyObject]: \(key) = \(value)")
+                text+="<\(key)>\(XMLTree(element))</\(key.componentsSeparatedByString(" ")[0])>\n"
+            case let elements as [[String:AnyObject]]:
+                //print("element as [[String:AnyObject]]: \(key) = \(value)")
+                text+="<\(key)>\n"
+                for element in elements {
+                    text+="\(XMLTree(element))\n"
+                }
+                text+="</\(key.componentsSeparatedByString(" ")[0])>\n"
+ 
             default:
-                print("***Ogiltigt format på listan! (\(value))")
+                print("***Ogiltigt format på listan! \(key) = (\(value))")
             }
         }
         return text
@@ -340,6 +362,9 @@ class TraderaService {
                 parser.delegate=delegate
             case "GetItemFieldValuesResult":
                 delegate=itemFieldValuesParser(session: session, parent: self)
+                parser.delegate=delegate
+            case "AddItemResponse":
+                delegate=addItemParser(session: session, parent: self)
                 parser.delegate=delegate
             default:
                 //print("Hoppar över element: \(elementName)")
@@ -598,6 +623,36 @@ class TraderaService {
             }
         }
         
+        ///////////// addItemParser /////////////
+        // Ser om en auktion kunde läggas upp. //
+        /////////////////////////////////////////
+        class addItemParser:XMLParser {
+            let parent:XMLParser?
+            var response=[String:String]()
+            var responseOK=false
+            
+            init(session: TraderaSession, parent:XMLParser) {
+                self.parent=parent
+                super.init(session: session)
+            }
+            override func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+                switch elementName {
+                    case "RequestId":
+                        response["RequestId"]=currentElement
+                    case "ItemId":
+                        response["ItemId"]=currentElement
+                    case "AddItemResult":
+                        responseOK=true
+                    default:
+                        break
+                }
+                currentElement=nil
+                if responseOK {
+                    session.notifications.postNotificationName(TraderaService.notifications.gotAddItemResult.rawValue, object: response)
+                }
+            }
+        }
+
         ///////// schenkerParser /////////////
         // Läser in närmaste Schenkerombud. //
         //////////////////////////////////////
@@ -667,7 +722,7 @@ class TraderaService {
         }
         // Används av NSURLConnectionDataDelegate
         func connectionDidFinishLoading(connection:NSURLConnection) {
-            //print("\(#function): data=\(NSString(data:mutableData, encoding: NSUTF8StringEncoding))")
+            print("\(#function): data=\(NSString(data:mutableData, encoding: NSUTF8StringEncoding))")
             let xmlParser=NSXMLParser(data: mutableData)
             let parserDelegate=TraderaService.XMLParser(session: session!)
             xmlParser.delegate=parserDelegate

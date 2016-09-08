@@ -40,6 +40,7 @@ class SelectCategoryViewController: UIViewController, UITableViewDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         parent?.categoryButton.setTitle(tableViewDataSource.path.last?.name, forState: .Normal)
+        parent?.category=tableViewDataSource.path.last?.id
     }
 
 }
