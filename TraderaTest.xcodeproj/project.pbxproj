@@ -26,6 +26,7 @@
 		DCBFB57E1D78816A00B2CAC3 /* NewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB57D1D78816A00B2CAC3 /* NewItem.swift */; };
 		DCBFB5801D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB57F1D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift */; };
 		DCBFB5821D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB5811D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift */; };
+		DCBFB5841D81BFE600B2CAC3 /* SelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBFB5831D81BFE600B2CAC3 /* SelectPhotoViewController.swift */; };
 		DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */; };
 		DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE7B8071CE9F8590096D5C9 /* ViewController.swift */; };
 		DCE7B80B1CE9F8590096D5C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCE7B8091CE9F8590096D5C9 /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		DCBFB57D1D78816A00B2CAC3 /* NewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewItem.swift; path = TraderaTest/NewItem.swift; sourceTree = "<group>"; };
 		DCBFB57F1D7EF3CB00B2CAC3 /* SelectPaymentShippingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPaymentShippingViewController.swift; sourceTree = "<group>"; };
 		DCBFB5811D7EF79C00B2CAC3 /* SelectPaymentShippingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPaymentShippingTableViewCell.swift; sourceTree = "<group>"; };
+		DCBFB5831D81BFE600B2CAC3 /* SelectPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPhotoViewController.swift; sourceTree = "<group>"; };
 		DCE7B8021CE9F8590096D5C9 /* TraderaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraderaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCE7B8051CE9F8590096D5C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCE7B8071CE9F8590096D5C9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				DCBFB57B1D75C3D200B2CAC3 /* TraderaUser.swift */,
 				DC22FED31CEF68ED00921E68 /* TraderaSession.swift */,
 				DCE7B8091CE9F8590096D5C9 /* Main.storyboard */,
+				DCBFB5831D81BFE600B2CAC3 /* SelectPhotoViewController.swift */,
 				DCBFB5791D74788700B2CAC3 /* LoginViewController.swift */,
 				DC46E5E41D12D27B0034D8D2 /* WebLoginViewController.swift */,
 				DC3862341CFB68BB00E6D2CB /* CategoryTableViewCell.xib */,
@@ -208,6 +211,7 @@
 				DC3862311CFB59B300E6D2CB /* SelectTimeViewController.swift in Sources */,
 				DCE7B8081CE9F8590096D5C9 /* ViewController.swift in Sources */,
 				DC4E249F1D2FD67C0094225B /* Secrets.swift in Sources */,
+				DCBFB5841D81BFE600B2CAC3 /* SelectPhotoViewController.swift in Sources */,
 				DCA0BE631CFB96B6008DFCF2 /* SchenkerViewController.swift in Sources */,
 				DCE7B8061CE9F8590096D5C9 /* AppDelegate.swift in Sources */,
 				DC3862251CF5F2F400E6D2CB /* CategoryTableViewDataSource.swift in Sources */,

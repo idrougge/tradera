@@ -42,5 +42,9 @@ class SelectCategoryViewController: UIViewController, UITableViewDelegate {
         parent?.categoryButton.setTitle(tableViewDataSource.path.last?.name, forState: .Normal)
         parent?.category=tableViewDataSource.path.last?.id
     }
+    
+    @IBAction func doneButton(sender: AnyObject) {
+        viewWillDisappear(true)
+    }
 
 }

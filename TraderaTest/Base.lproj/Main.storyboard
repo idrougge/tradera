@@ -493,6 +493,23 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGP-9L-ZgU">
+                                <rect key="frame" x="454" y="420" width="126" height="30"/>
+                                <state key="normal" title="Bild"/>
+                                <connections>
+                                    <segue destination="szo-bt-MDc" kind="show" identifier="SelectPhotoSegue" id="GWD-fC-IMR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLW-0w-448">
+                                <rect key="frame" x="550" y="529" width="30" height="30"/>
+                                <state key="normal" title="Hej"/>
+                                <connections>
+                                    <action selector="shitButton:" destination="Yc2-d6-Z4r" eventType="touchUpInside" id="Pya-uZ-Ni2"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="znL-Ra-uCL">
+                                <rect key="frame" x="454" y="458" width="126" height="63"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -501,15 +518,19 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                             <constraint firstItem="oMF-tR-pe9" firstAttribute="centerX" secondItem="eBu-mr-cZV" secondAttribute="centerX" id="551-YN-QFu"/>
                             <constraint firstItem="CFe-Ey-kmm" firstAttribute="leading" secondItem="cn8-ek-J4r" secondAttribute="leading" id="B2E-jf-M6L"/>
                             <constraint firstItem="Nih-dm-4t5" firstAttribute="leading" secondItem="c77-Tz-oRT" secondAttribute="leading" id="CXE-P9-G17"/>
+                            <constraint firstItem="HGP-9L-ZgU" firstAttribute="baseline" secondItem="MqT-MS-aPp" secondAttribute="baseline" id="DMt-5J-yY4"/>
                             <constraint firstItem="fU4-bj-JfA" firstAttribute="top" secondItem="ulO-ab-ETd" secondAttribute="top" id="EId-ST-aFY"/>
                             <constraint firstItem="0YD-qe-Ek7" firstAttribute="top" secondItem="CUv-0N-uH2" secondAttribute="top" id="FpA-jk-eRE"/>
                             <constraint firstItem="fU4-bj-JfA" firstAttribute="top" secondItem="oMF-tR-pe9" secondAttribute="bottom" constant="8" symbolic="YES" id="GEb-ll-vfa"/>
                             <constraint firstItem="xD0-1w-GaB" firstAttribute="trailing" secondItem="CMj-4B-Sib" secondAttribute="trailing" id="GjU-om-y12"/>
                             <constraint firstItem="sRN-1O-baz" firstAttribute="baseline" secondItem="fU4-bj-JfA" secondAttribute="baseline" id="HgS-pU-2qF"/>
+                            <constraint firstItem="869-Xl-h5k" firstAttribute="top" secondItem="zLW-0w-448" secondAttribute="bottom" constant="41" id="IKG-nf-QCF"/>
+                            <constraint firstItem="znL-Ra-uCL" firstAttribute="leading" secondItem="HGP-9L-ZgU" secondAttribute="leading" id="KWX-4N-Q2Y"/>
                             <constraint firstItem="CMj-4B-Sib" firstAttribute="leading" secondItem="G45-Gz-d8p" secondAttribute="trailing" constant="8" symbolic="YES" id="NcD-9c-2Mp"/>
                             <constraint firstItem="c77-Tz-oRT" firstAttribute="centerY" secondItem="kUs-5v-G8T" secondAttribute="centerY" id="R2n-6Q-8Hh"/>
                             <constraint firstItem="MqT-MS-aPp" firstAttribute="leading" secondItem="WeC-i4-AOZ" secondAttribute="trailing" constant="18" id="TKw-MH-x0I"/>
                             <constraint firstAttribute="bottom" secondItem="eBu-mr-cZV" secondAttribute="bottom" constant="20" symbolic="YES" id="Whc-FM-K1S"/>
+                            <constraint firstItem="zLW-0w-448" firstAttribute="trailing" secondItem="HGP-9L-ZgU" secondAttribute="trailing" id="XAT-zk-Wkg"/>
                             <constraint firstItem="CMj-4B-Sib" firstAttribute="baseline" secondItem="CUv-0N-uH2" secondAttribute="baseline" id="XcJ-4I-1KQ"/>
                             <constraint firstItem="CFe-Ey-kmm" firstAttribute="trailing" secondItem="ciz-TO-pX7" secondAttribute="trailingMargin" id="ZP6-zj-huS"/>
                             <constraint firstItem="V2f-zi-YuE" firstAttribute="leading" secondItem="ciz-TO-pX7" secondAttribute="leadingMargin" id="ZPB-68-XdL"/>
@@ -518,16 +539,21 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                             <constraint firstItem="oMF-tR-pe9" firstAttribute="top" secondItem="cn8-ek-J4r" secondAttribute="bottom" constant="8" symbolic="YES" id="e6l-rG-3AT"/>
                             <constraint firstItem="CFe-Ey-kmm" firstAttribute="top" secondItem="V2f-zi-YuE" secondAttribute="bottom" constant="8" symbolic="YES" id="eCf-Cg-2iK"/>
                             <constraint firstItem="V2f-zi-YuE" firstAttribute="leading" secondItem="CFe-Ey-kmm" secondAttribute="leading" id="fXW-Vt-gua"/>
+                            <constraint firstItem="znL-Ra-uCL" firstAttribute="top" secondItem="c77-Tz-oRT" secondAttribute="top" id="fg1-Pq-Vck"/>
                             <constraint firstItem="0YD-qe-Ek7" firstAttribute="leading" secondItem="WeC-i4-AOZ" secondAttribute="leading" id="fxM-p7-PvZ"/>
+                            <constraint firstItem="HGP-9L-ZgU" firstAttribute="trailing" secondItem="CMj-4B-Sib" secondAttribute="trailing" id="gON-yY-dkW"/>
                             <constraint firstItem="CUv-0N-uH2" firstAttribute="leading" secondItem="MqT-MS-aPp" secondAttribute="leading" id="gls-Sj-bNc"/>
+                            <constraint firstItem="zLW-0w-448" firstAttribute="top" secondItem="znL-Ra-uCL" secondAttribute="bottom" constant="8" symbolic="YES" id="jb3-5K-pKE"/>
                             <constraint firstItem="ulO-ab-ETd" firstAttribute="leading" secondItem="CUv-0N-uH2" secondAttribute="leading" id="jtn-bm-loY"/>
                             <constraint firstItem="xD0-1w-GaB" firstAttribute="leading" secondItem="sRN-1O-baz" secondAttribute="trailing" constant="8" symbolic="YES" id="kj7-6K-xeC"/>
                             <constraint firstItem="V2f-zi-YuE" firstAttribute="top" secondItem="N93-fI-qxd" secondAttribute="bottom" constant="8" symbolic="YES" id="l0L-0i-z3i"/>
+                            <constraint firstItem="znL-Ra-uCL" firstAttribute="trailing" secondItem="HGP-9L-ZgU" secondAttribute="trailing" id="luQ-WN-B7r"/>
                             <constraint firstItem="G45-Gz-d8p" firstAttribute="baseline" secondItem="0YD-qe-Ek7" secondAttribute="baseline" id="ms3-ho-eO3"/>
                             <constraint firstItem="cn8-ek-J4r" firstAttribute="leading" secondItem="oMF-tR-pe9" secondAttribute="leading" id="nC1-ov-zYZ"/>
                             <constraint firstItem="8my-nP-dVg" firstAttribute="trailing" secondItem="kUs-5v-G8T" secondAttribute="trailing" id="nIN-k1-etN"/>
                             <constraint firstItem="MqT-MS-aPp" firstAttribute="leading" secondItem="kUs-5v-G8T" secondAttribute="leading" id="naa-EC-j3c"/>
                             <constraint firstItem="8my-nP-dVg" firstAttribute="leading" secondItem="kUs-5v-G8T" secondAttribute="leading" id="oBa-XD-65G"/>
+                            <constraint firstItem="HGP-9L-ZgU" firstAttribute="leading" secondItem="CMj-4B-Sib" secondAttribute="leading" id="pQJ-9D-fOj"/>
                             <constraint firstItem="869-Xl-h5k" firstAttribute="top" secondItem="8my-nP-dVg" secondAttribute="bottom" constant="79" id="pcJ-Gi-Cm9"/>
                             <constraint firstItem="fU4-bj-JfA" firstAttribute="leading" secondItem="0YD-qe-Ek7" secondAttribute="leading" id="pma-zG-BRY"/>
                             <constraint firstItem="oMF-tR-pe9" firstAttribute="leading" secondItem="fU4-bj-JfA" secondAttribute="leading" id="qRY-WZ-Qzg"/>
@@ -545,7 +571,9 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                     <connections>
                         <outlet property="buyNowTextField" destination="8my-nP-dVg" id="bCa-lN-5zl"/>
                         <outlet property="categoryButton" destination="MqT-MS-aPp" id="UFi-2X-eu6"/>
+                        <outlet property="choosePictureButton" destination="HGP-9L-ZgU" id="he8-Gi-3k6"/>
                         <outlet property="endingTimeButton" destination="CUv-0N-uH2" id="hCH-JC-9F9"/>
+                        <outlet property="imageView" destination="znL-Ra-uCL" id="pfd-XP-VQ4"/>
                         <outlet property="longDescriptionTextView" destination="oMF-tR-pe9" id="VcQ-eN-nLd"/>
                         <outlet property="shortDescriptionTextField" destination="CFe-Ey-kmm" id="yAR-uu-CgA"/>
                         <outlet property="startingBidTextField" destination="kUs-5v-G8T" id="qNi-yJ-mqH"/>
@@ -672,7 +700,11 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" prompt="Välj kategori" id="2S9-XQ-fgw">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="fZd-jC-k5o"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="fZd-jC-k5o">
+                            <connections>
+                                <action selector="doneButton:" destination="kZx-tc-Cao" id="ddy-Sc-UxQ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -743,6 +775,47 @@ Du kommer att skickas vidare till Traderas inloggningsskärm för att bekräfta 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XLU-gv-S2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1777" y="1021"/>
+        </scene>
+        <!--Select Photo View Controller-->
+        <scene sceneID="Fry-D3-eQ5">
+            <objects>
+                <viewController id="szo-bt-MDc" customClass="SelectPhotoViewController" customModule="TraderaTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XrL-Xr-r45"/>
+                        <viewControllerLayoutGuide type="bottom" id="n7j-EM-pwy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lj7-Io-oHE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Upn-K3-A3e">
+                                <rect key="frame" x="0.0" y="64" width="417" height="260"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gpq-jv-SWQ">
+                                <rect key="frame" x="273" y="550" width="54" height="30"/>
+                                <state key="normal" title="Välj bild"/>
+                                <connections>
+                                    <action selector="didPressButton:" destination="szo-bt-MDc" eventType="touchUpInside" id="ZWz-DW-udd"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Upn-K3-A3e" firstAttribute="centerX" secondItem="Gpq-jv-SWQ" secondAttribute="centerX" constant="-91.5" id="UXh-pJ-e8y"/>
+                            <constraint firstItem="Upn-K3-A3e" firstAttribute="leading" secondItem="Lj7-Io-oHE" secondAttribute="leading" id="VY0-MW-vOo"/>
+                            <constraint firstAttribute="bottom" secondItem="Gpq-jv-SWQ" secondAttribute="bottom" constant="20" symbolic="YES" id="fQY-LN-UWe"/>
+                            <constraint firstAttribute="trailing" secondItem="Upn-K3-A3e" secondAttribute="trailing" constant="183" id="hN4-Tw-OdZ"/>
+                            <constraint firstItem="Upn-K3-A3e" firstAttribute="top" secondItem="XrL-Xr-r45" secondAttribute="bottom" id="jeF-Gp-XHE"/>
+                            <constraint firstItem="Gpq-jv-SWQ" firstAttribute="top" secondItem="Upn-K3-A3e" secondAttribute="bottom" constant="226" id="o8u-D7-Fzs"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="Upn-K3-A3e" id="rCY-c9-kDd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ar7-fA-Uz5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2451" y="1021"/>
         </scene>
         <!--Sökresultat-->
         <scene sceneID="bY0-yi-IHZ">
